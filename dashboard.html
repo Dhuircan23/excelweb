@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard conceptual — ExcelWeb</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_ds/modernist-dfad2085-fae2-4742-ad7a-1e29b302fce3/styles.css">
+<script src="_ds/modernist-dfad2085-fae2-4742-ad7a-1e29b302fce3/_ds_bundle.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: var(--color-accent-700); text-decoration: none; }
+  a:hover { color: var(--color-accent); }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-accent-300); }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  @keyframes ew-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;background:var(--color-bg)">
+  <header style="border-bottom:2px solid var(--color-text);background:var(--color-bg)">
+    <div style="max-width:1400px;margin:0 auto;padding:0 clamp(16px,3vw,32px);height:64px;display:flex;align-items:center;gap:20px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;color:var(--color-text);font-weight:900;font-size:18px;letter-spacing:-0.02em">
+        <span style="width:20px;height:20px;background:var(--color-accent);display:block"></span>
+        <span>ExcelWeb</span>
+      </a>
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:var(--color-neutral-600);border-left:1px solid color-mix(in srgb, var(--color-text) 30%, transparent);padding-left:20px">DASHBOARD CONCEPTUAL</span>
+      <a href="diagnostico.html" style="margin-left:auto;background:var(--color-accent);color:var(--color-bg);font-size:13.5px;font-weight:700;padding:12px 18px;display:block" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Quiero uno así</a>
+    </div>
+  </header>
+
+  <div style="max-width:1400px;width:100%;margin:0 auto;padding:clamp(20px,3vw,36px) clamp(16px,3vw,32px) clamp(28px,4vw,56px);flex:1 1 auto">
+    <p style="margin:0 0 clamp(18px,2.5vw,28px);font-size:15px;line-height:1.55;color:var(--color-neutral-700);max-width:64ch">Ejemplo de cómo puede verse un sistema entregado. Los datos son ficticios; la estructura y los estados son los que usamos en proyectos reales.</p>
+
+    <div style="border:2px solid var(--color-text);background:var(--color-neutral-100);display:flex;flex-wrap:wrap;align-items:stretch;box-shadow:var(--shadow-lg)">
+
+      <nav style="flex:1 1 210px;background:var(--color-text);display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:10px;padding:18px 16px;border-bottom:1px solid color-mix(in srgb, var(--color-bg) 20%, transparent)">
+          <span style="width:16px;height:16px;background:var(--color-accent);display:block"></span>
+          <span style="font-size:14px;font-weight:800;color:var(--color-bg)">Panel operativo</span>
+        </div>
+        <sc-for list="{{ nav }}" as="nv" hint-placeholder-count="6">
+          <button type="button" onClick="{{ nv.select }}" style="border:0;background:{{ nv.bg }};color:{{ nv.fg }};font-family:inherit;font-size:14px;font-weight:{{ nv.weight }};padding:14px 16px;text-align:left;cursor:pointer;border-bottom:1px solid color-mix(in srgb, var(--color-bg) 12%, transparent);display:flex;align-items:center;gap:10px" style-hover="background:var(--color-neutral-800);color:var(--color-bg)">
+            <span style="width:5px;height:5px;background:{{ nv.dot }};display:block;flex:0 0 auto"></span>
+            <span style="flex:1 1 auto">{{ nv.name }}</span>
+            <sc-if value="{{ nv.hasCount }}" hint-placeholder-val="{{ false }}">
+              <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;padding:3px 6px;background:var(--color-accent);color:var(--color-bg);flex:0 0 auto">{{ nv.count }}</span>
+            </sc-if>
+          </button>
+        </sc-for>
+        <div style="margin-top:auto;padding:16px;border-top:1px solid color-mix(in srgb, var(--color-bg) 20%, transparent);display:flex;align-items:center;gap:10px">
+          <span style="width:28px;height:28px;background:var(--color-neutral-700);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--color-bg);flex:0 0 auto">MR</span>
+          <span style="min-width:0">
+            <span style="display:block;font-size:13px;font-weight:700;color:var(--color-bg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Marta Ríos</span>
+            <span style="display:block;font-size:11.5px;color:var(--color-neutral-500)">Administración</span>
+          </span>
+        </div>
+      </nav>
+
+      <main style="flex:999 1 460px;min-width:0;display:flex;flex-direction:column">
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:18px 18px;border-bottom:2px solid var(--color-text)">
+          <h1 style="margin:0;font-size:clamp(20px,2.2vw,26px);font-weight:900;letter-spacing:-0.025em">{{ title }}</h1>
+          <span class="tag tag-accent" style="font-size:11px;font-weight:700;padding:6px 9px;background:var(--color-accent-200);color:var(--color-accent-700)">datos ficticios</span>
+          <span style="margin-left:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--color-neutral-600)">actualizado hace 2 min</span>
+        </div>
+
+        <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+          <div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-bottom:2px solid var(--color-text)">
+              <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="4">
+                <div style="padding:18px;border-right:1px solid color-mix(in srgb, var(--color-text) 20%, transparent)">
+                  <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700);margin-bottom:10px">{{ m.label }}</div>
+                  <div style="font-size:clamp(24px,2.6vw,32px);font-weight:900;letter-spacing:-0.03em;line-height:1">{{ m.value }}</div>
+                  <div style="font-size:12.5px;color:{{ m.color }};margin-top:8px;font-weight:600">{{ m.delta }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+              <div style="padding:20px 18px;border-right:1px solid color-mix(in srgb, var(--color-text) 20%, transparent);border-bottom:2px solid var(--color-text)">
+                <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;margin-bottom:18px">
+                  <span style="font-size:12px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-neutral-800)">Procesos ejecutados por semana</span>
+                  <span style="margin-left:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--color-neutral-600)">12 semanas</span>
+                </div>
+                <div style="display:flex;align-items:flex-end;gap:6px;height:130px">
+                  <sc-for list="{{ bars }}" as="b" hint-placeholder-count="12">
+                    <div style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+                      <div style="background:{{ b.color }};height:{{ b.h }}"></div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:var(--color-neutral-500)">
+                  <span>S23</span><span>S29</span><span>S34</span>
+                </div>
+              </div>
+
+              <div style="border-bottom:2px solid var(--color-text)">
+                <div style="padding:20px 18px 14px;font-size:12px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-neutral-800)">Alertas</div>
+                <sc-for list="{{ alerts }}" as="al" hint-placeholder-count="3">
+                  <div style="display:flex;gap:12px;align-items:flex-start;padding:14px 18px;border-top:1px solid color-mix(in srgb, var(--color-text) 15%, transparent)">
+                    <span style="width:8px;height:8px;background:{{ al.dot }};display:block;flex:0 0 auto;margin-top:5px"></span>
+                    <span style="flex:1 1 auto;min-width:0">
+                      <span style="display:block;font-size:14px;font-weight:700;line-height:1.3">{{ al.title }}</span>
+                      <span style="display:block;font-size:12.5px;color:var(--color-neutral-700);margin-top:3px">{{ al.meta }}</span>
+                    </span>
+                    <span class="tag" style="font-size:10.5px;font-weight:800;letter-spacing:0.05em;padding:5px 8px;background:{{ al.bg }};color:{{ al.fg }};flex:0 0 auto">{{ al.level }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+              <div style="border-right:1px solid color-mix(in srgb, var(--color-text) 20%, transparent);border-bottom:2px solid var(--color-text)">
+                <div style="padding:20px 18px 14px;font-size:12px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-neutral-800)">Actividad reciente</div>
+                <sc-for list="{{ activity }}" as="ac" hint-placeholder-count="5">
+                  <div style="display:flex;gap:12px;align-items:baseline;padding:13px 18px;border-top:1px solid color-mix(in srgb, var(--color-text) 15%, transparent)">
+                    <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--color-neutral-500);flex:0 0 auto">{{ ac.time }}</span>
+                    <span style="flex:1 1 auto;font-size:13.5px;line-height:1.4;min-width:0">{{ ac.text }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="border-bottom:2px solid var(--color-text)">
+                <div style="padding:20px 18px 14px;font-size:12px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-neutral-800)">Tareas pendientes</div>
+                <sc-for list="{{ tasks }}" as="tk" hint-placeholder-count="4">
+                  <div style="display:flex;gap:12px;align-items:center;padding:13px 18px;border-top:1px solid color-mix(in srgb, var(--color-text) 15%, transparent)">
+                    <span style="width:16px;height:16px;border:2px solid var(--color-text);display:block;flex:0 0 auto;background:{{ tk.box }}"></span>
+                    <span style="flex:1 1 auto;font-size:13.5px;font-weight:600;line-height:1.35;min-width:0;text-decoration:{{ tk.line }};color:{{ tk.color }}">{{ tk.text }}</span>
+                    <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--color-neutral-600);flex:0 0 auto">{{ tk.due }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isTable }}" hint-placeholder-val="{{ false }}">
+          <div style="overflow-x:auto;border-bottom:2px solid var(--color-text)">
+            <table class="table" style="width:100%;border-collapse:collapse;min-width:560px">
+              <thead>
+                <tr>
+                  <sc-for list="{{ columns }}" as="c" hint-placeholder-count="4">
+                    <th style="text-align:left;padding:13px 18px;background:var(--color-surface);border-bottom:2px solid var(--color-text);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-neutral-700);font-weight:800;white-space:nowrap">{{ c }}</th>
+                  </sc-for>
+                </tr>
+              </thead>
+              <tbody>
+                <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+                  <tr style="background:var(--color-neutral-100)" style-hover="background:var(--color-surface)">
+                    <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="4">
+                      <td style="padding:14px 18px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 15%, transparent);font-size:13.5px;font-weight:{{ c.weight }};white-space:nowrap">
+                        <sc-if value="{{ c.badge }}" hint-placeholder-val="{{ false }}">
+                          <span class="tag" style="font-size:10.5px;font-weight:800;letter-spacing:0.05em;padding:5px 8px;background:{{ c.bg }};color:{{ c.fg }}">{{ c.v }}</span>
+                        </sc-if>
+                        <sc-if value="{{ c.plain }}" hint-placeholder-val="{{ true }}">
+                          <span>{{ c.v }}</span>
+                        </sc-if>
+                      </td>
+                    </sc-for>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:clamp(36px,6vw,80px) 18px;display:flex;flex-direction:column;gap:16px;align-items:flex-start;border-bottom:2px solid var(--color-text)">
+            <span style="width:32px;height:32px;border:2px solid var(--color-text);display:block"></span>
+            <h2 style="margin:0;font-size:clamp(20px,2.2vw,26px);font-weight:900;letter-spacing:-0.025em;max-width:24ch">{{ emptyTitle }}</h2>
+            <p style="margin:0;font-size:15px;line-height:1.55;color:var(--color-neutral-700);max-width:48ch">{{ emptyBody }}</p>
+            <button type="button" style="background:var(--color-accent);border:0;color:var(--color-bg);font-weight:700;font-size:15px;padding:16px 22px;cursor:pointer;text-align:left" style-hover="background:var(--color-accent-600)">{{ emptyCta }}</button>
+          </div>
+        </sc-if>
+
+        <div style="margin-top:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:16px 18px;background:var(--color-accent-100)">
+          <span style="width:8px;height:8px;background:var(--color-accent);display:block;animation:ew-pulse 1.8s ease-in-out infinite;flex:0 0 auto"></span>
+          <span style="font-size:12.5px;font-weight:600;color:var(--color-accent-700);flex:1 1 220px">{{ note }}</span>
+          <span class="tag tag-outline" style="font-size:11px;font-weight:700;padding:6px 9px;border:1px solid var(--color-accent-300);color:var(--color-accent-700)">Exportar a Excel</span>
+        </div>
+      </main>
+    </div>
+
+    <div style="margin-top:clamp(24px,3.5vw,44px);border:2px solid var(--color-text);background:var(--color-surface);padding:clamp(22px,3vw,36px);display:flex;flex-wrap:wrap;gap:20px;align-items:center">
+      <div style="flex:1 1 320px">
+        <h2 style="margin:0 0 10px;font-size:clamp(20px,2.4vw,28px);font-weight:900;letter-spacing:-0.025em;line-height:1.1;max-width:26ch">Tu sistema tendría tus procesos, no estos.</h2>
+        <p style="margin:0;font-size:15.5px;line-height:1.55;color:var(--color-neutral-800);max-width:52ch">Las pantallas se definen a partir de tu Excel y de cómo trabaja tu equipo hoy.</p>
+      </div>
+      <a href="diagnostico.html" class="btn btn-primary" style="background:var(--color-accent);color:var(--color-bg);font-weight:700;font-size:16px;padding:18px 26px;display:block;flex:0 0 auto" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Solicitar diagnóstico</a>
+    </div>
+  </div>
+
+  <footer style="border-top:2px solid var(--color-text);background:var(--color-bg)">
+    <div style="max-width:1400px;margin:0 auto;padding:22px clamp(16px,3vw,32px);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+      <span style="font-size:12.5px;color:var(--color-neutral-600)">Dashboard conceptual · ExcelWeb</span>
+      <div style="display:flex;flex-wrap:wrap;gap:20px">
+        <a href="index.html" style="font-size:13px;font-weight:600">Volver al inicio</a>
+        <a href="demo.html" style="font-size:13px;font-weight:600">Demo interactiva</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { page: "Inicio" };
+
+  renderVals() {
+    const page = this.state.page;
+
+    const pages = {
+      Inicio: { kind: "home", title: "Inicio", note: "6 automatizaciones activas · última ejecución hace 12 minutos" },
+      Clientes: {
+        kind: "table", title: "Clientes", count: 4,
+        note: "Los recordatorios de seguimiento se envían solos según el estado",
+        columns: ["Cliente", "Contacto", "Estado", "Último contacto", "Responsable"],
+        rows: [
+          ["Ferretería Andes", "compras@andes.cl", { badge: "ACTIVO", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }, "18/08", "Marta"],
+          ["Taller Nova", "nova@correo.com", { badge: "SEGUIMIENTO", bg: "var(--color-accent)", fg: "var(--color-bg)" }, "12/08", "Diego"],
+          ["Distribuidora Sur", "WhatsApp", { badge: "PROPUESTA", bg: "var(--color-accent-200)", fg: "var(--color-accent-700)" }, "20/08", "Marta"],
+          ["Servicios Lima", "info@slima.pe", { badge: "ACTIVO", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }, "22/08", "Ana"],
+          ["Constructora Ríos", "—", { badge: "SIN CONTACTO", bg: "var(--color-text)", fg: "var(--color-bg)" }, "02/07", "Sin asignar"],
+          ["Import. Bravo", "bravo@ib.mx", { badge: "ACTIVO", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }, "21/08", "Diego"]
+        ]
+      },
+      Procesos: {
+        kind: "table", title: "Procesos", count: 3,
+        note: "Cada proceso reemplazó un archivo de Excel y sus pasos manuales",
+        columns: ["Proceso", "Origen", "Ejecuciones/mes", "Ahorro estimado", "Estado"],
+        rows: [
+          ["Control de inventario", "inventario_v7.xlsx", "1.240", "16 h", { badge: "EN USO", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }],
+          ["Generador de cotizaciones", "cotizador.xlsx + Word", "312", "22 h", { badge: "EN USO", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }],
+          ["Seguimiento de clientes", "contactos.xlsx + WhatsApp", "480", "9 h", { badge: "EN USO", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }],
+          ["Cierre mensual de costos", "costos_2026.xlsx", "12", "11 h", { badge: "EN PRUEBAS", bg: "var(--color-accent-200)", fg: "var(--color-accent-700)" }],
+          ["Control de horas", "planilla_horas.xlsx", "0", "—", { badge: "EN DISEÑO", bg: "var(--color-text)", fg: "var(--color-bg)" }],
+          ["Registro de incidencias", "por definir", "0", "—", { badge: "PROPUESTO", bg: "var(--color-text)", fg: "var(--color-bg)" }]
+        ]
+      },
+      Automatizaciones: {
+        kind: "table", title: "Automatizaciones", count: 2,
+        note: "Dos automatizaciones requieren revisión antes de reactivarse",
+        columns: ["Automatización", "Disparador", "Última ejecución", "Estado"],
+        rows: [
+          ["Aviso de stock bajo", "Diario 08:00", "hoy 08:00", { badge: "ACTIVA", bg: "var(--color-accent)", fg: "var(--color-bg)" }],
+          ["Cotización en PDF", "Al aprobar cotización", "hoy 11:42", { badge: "ACTIVA", bg: "var(--color-accent)", fg: "var(--color-bg)" }],
+          ["Reporte mensual", "Día 1 de cada mes", "01/08 06:00", { badge: "ACTIVA", bg: "var(--color-accent)", fg: "var(--color-bg)" }],
+          ["Recordatorio de seguimiento", "7 días sin contacto", "ayer 09:15", { badge: "ACTIVA", bg: "var(--color-accent)", fg: "var(--color-bg)" }],
+          ["Aviso de pago pendiente", "Vencimiento +3 días", "12/08 09:00", { badge: "PAUSADA", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }],
+          ["Sincronización contable", "Diario 23:00", "falló 20/08", { badge: "ERROR", bg: "var(--color-text)", fg: "var(--color-bg)" }]
+        ]
+      },
+      Reportes: {
+        kind: "empty", title: "Reportes",
+        note: "Los reportes programados llegan por correo en Excel y PDF",
+        emptyTitle: "Aún no has creado un reporte propio.",
+        emptyBody: "Los cuatro reportes automáticos siguen funcionando. Aquí puedes armar uno a medida eligiendo campos, filtros y periodicidad.",
+        emptyCta: "Crear reporte"
+      },
+      Configuración: {
+        kind: "empty", title: "Configuración",
+        note: "Los cambios de configuración quedan registrados con fecha y usuario",
+        emptyTitle: "Todo está configurado.",
+        emptyBody: "Usuarios, permisos, stock mínimo y plantillas de documento están definidos. Cuando cambie algo del proceso, se ajusta desde aquí.",
+        emptyCta: "Revisar usuarios y permisos"
+      }
+    };
+
+    const cur = pages[page];
+    const barVals = [42, 58, 51, 74, 66, 88, 79, 61, 92, 70, 84, 96];
+
+    return {
+      nav: Object.keys(pages).map(name => ({
+        name,
+        bg: name === page ? "var(--color-accent)" : "transparent",
+        fg: name === page ? "var(--color-bg)" : "var(--color-neutral-400)",
+        weight: name === page ? 700 : 500,
+        dot: name === page ? "var(--color-bg)" : "var(--color-neutral-600)",
+        hasCount: !!pages[name].count,
+        count: pages[name].count || "",
+        select: () => this.setState({ page: name })
+      })),
+      title: cur.title,
+      note: cur.note,
+      isHome: cur.kind === "home",
+      isTable: cur.kind === "table",
+      isEmpty: cur.kind === "empty",
+
+      metrics: [
+        { label: "Procesos activos", value: "6", delta: "+1 este mes", color: "var(--color-accent-700)" },
+        { label: "Horas ahorradas", value: "58", delta: "por mes, estimado", color: "var(--color-neutral-600)" },
+        { label: "Automatizaciones", value: "4", delta: "1 pausada, 1 con error", color: "var(--color-accent-700)" },
+        { label: "Clientes activos", value: "128", delta: "+6 vs julio", color: "var(--color-neutral-600)" }
+      ],
+      bars: barVals.map(v => ({ h: v + "%", color: v > 90 ? "var(--color-text)" : "var(--color-accent)" })),
+
+      alerts: [
+        { title: "Sincronización contable falló", meta: "20/08 23:00 · credenciales vencidas", level: "ERROR", bg: "var(--color-text)", fg: "var(--color-bg)", dot: "var(--color-accent)" },
+        { title: "3 productos bajo el stock mínimo", meta: "Aviso enviado a compras", level: "ATENCIÓN", bg: "var(--color-accent)", fg: "var(--color-bg)", dot: "var(--color-accent)" },
+        { title: "Constructora Ríos sin contacto en 52 días", meta: "Sin responsable asignado", level: "REVISAR", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)", dot: "var(--color-neutral-500)" }
+      ],
+      activity: [
+        { time: "11:42", text: "Cotización #2841 generada y enviada a Taller Nova" },
+        { time: "10:15", text: "Diego registró una entrada de 80 u. de Correa 8mm" },
+        { time: "09:03", text: "Recordatorio de seguimiento enviado a 4 clientes" },
+        { time: "08:00", text: "Aviso de stock bajo enviado a compras (3 productos)" },
+        { time: "ayer", text: "Marta actualizó el stock mínimo de 12 productos" }
+      ],
+      tasks: [
+        { text: "Revisar credenciales de la sincronización contable", due: "hoy", box: "transparent", line: "none", color: "var(--color-text)" },
+        { text: "Aprobar orden de compra a Repuestos Sur", due: "hoy", box: "transparent", line: "none", color: "var(--color-text)" },
+        { text: "Asignar responsable a Constructora Ríos", due: "27/08", box: "transparent", line: "none", color: "var(--color-text)" },
+        { text: "Validar cierre de costos de julio", due: "hecho", box: "var(--color-accent)", line: "line-through", color: "var(--color-neutral-500)" }
+      ],
+
+      columns: cur.columns || [],
+      rows: (cur.rows || []).map(cells => ({
+        cells: cells.map((c, i) => typeof c === "object"
+          ? { v: c.badge, badge: true, plain: false, bg: c.bg, fg: c.fg, weight: 700 }
+          : { v: c, badge: false, plain: true, bg: "transparent", fg: "var(--color-text)", weight: i === 0 ? 700 : 400 })
+      })),
+      emptyTitle: cur.emptyTitle || "",
+      emptyBody: cur.emptyBody || "",
+      emptyCta: cur.emptyCta || ""
+    };
+  }
+}
+
+</script>
+</body>
+</html>

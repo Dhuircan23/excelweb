@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo — ExcelWeb</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_ds/modernist-dfad2085-fae2-4742-ad7a-1e29b302fce3/styles.css">
+<script src="_ds/modernist-dfad2085-fae2-4742-ad7a-1e29b302fce3/_ds_bundle.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: var(--color-accent-700); text-decoration: none; }
+  a:hover { color: var(--color-accent); }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-accent-300); }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  @keyframes ew-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+  @keyframes ew-slide { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;background:var(--color-bg)">
+  <header style="border-bottom:2px solid var(--color-text);background:var(--color-bg);position:sticky;top:0;z-index:40">
+    <div style="max-width:1280px;margin:0 auto;padding:0 clamp(16px,3vw,32px);height:64px;display:flex;align-items:center;gap:20px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;color:var(--color-text);font-weight:900;font-size:18px;letter-spacing:-0.02em">
+        <span style="width:20px;height:20px;background:var(--color-accent);display:block"></span>
+        <span>ExcelWeb</span>
+      </a>
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:var(--color-neutral-600);border-left:1px solid color-mix(in srgb, var(--color-text) 30%, transparent);padding-left:20px">DEMO INTERACTIVA</span>
+      <a href="diagnostico.html" style="margin-left:auto;background:var(--color-accent);color:var(--color-bg);font-size:13.5px;font-weight:700;padding:12px 18px;display:block" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Transformar mi Excel</a>
+    </div>
+  </header>
+
+  <div style="border-bottom:2px solid var(--color-text);background:var(--color-surface)">
+    <div style="max-width:1280px;margin:0 auto;padding:14px clamp(16px,3vw,32px);display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+      <sc-for list="{{ progressSteps }}" as="ps" hint-placeholder-count="4">
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:{{ ps.bg }};color:{{ ps.fg }}">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.08em">{{ ps.n }}</span>
+          <span style="font-size:12.5px;font-weight:700">{{ ps.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <main style="flex:1 1 auto;max-width:1280px;width:100%;margin:0 auto;padding:clamp(24px,4vw,48px) clamp(16px,3vw,32px)">
+
+    <sc-if value="{{ isExcel }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <h1 style="margin:0 0 12px;font-size:clamp(26px,3.6vw,42px);font-weight:900;letter-spacing:-0.03em;line-height:1.05;max-width:24ch">Este es el Excel. Pulsa convertir.</h1>
+        <p style="margin:0 0 clamp(24px,3vw,36px);font-size:16.5px;line-height:1.55;color:var(--color-neutral-800);max-width:56ch">Cinco pestañas, fórmulas cruzadas y un error de referencia. Un archivo cualquiera de cualquier empresa.</p>
+
+        <div style="border:2px solid var(--color-text);background:var(--color-surface)">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:12px 16px;border-bottom:2px solid var(--color-text)">
+            <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;font-weight:600">Control de inventario_v7_FINAL.xlsx</span>
+            <span style="font-size:11px;font-weight:700;padding:4px 8px;background:var(--color-neutral-300);color:var(--color-neutral-800)">Solo lectura</span>
+            <span style="margin-left:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--color-neutral-600)">últ. edición: hace 2 días · Marta</span>
+          </div>
+          <div style="display:flex;overflow-x:auto;border-bottom:2px solid var(--color-text);background:var(--color-bg)">
+            <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="5">
+              <button type="button" onClick="{{ tb.select }}" style="flex:0 0 auto;padding:12px 18px;border:0;border-right:1px solid color-mix(in srgb, var(--color-text) 25%, transparent);background:{{ tb.bg }};color:{{ tb.fg }};font-family:inherit;font-size:13px;font-weight:{{ tb.weight }};cursor:pointer;white-space:nowrap" style-hover="background:var(--color-surface)">{{ tb.name }}</button>
+            </sc-for>
+          </div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;background:var(--color-neutral-100);padding:10px 16px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 25%, transparent);color:var(--color-neutral-700);overflow-x:auto;white-space:nowrap">fx  {{ formula }}</div>
+          <div style="overflow-x:auto">
+            <table class="table" style="width:100%;border-collapse:collapse;min-width:560px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px">
+              <thead>
+                <tr>
+                  <sc-for list="{{ columns }}" as="col" hint-placeholder-count="4">
+                    <th style="text-align:left;padding:10px 14px;background:var(--color-bg);border-bottom:2px solid var(--color-text);border-right:1px solid color-mix(in srgb, var(--color-text) 18%, transparent);font-size:11px;letter-spacing:0.06em;color:var(--color-neutral-700);font-weight:700;white-space:nowrap">{{ col }}</th>
+                  </sc-for>
+                </tr>
+              </thead>
+              <tbody>
+                <sc-for list="{{ rows }}" as="row" hint-placeholder-count="6">
+                  <tr>
+                    <sc-for list="{{ row.cells }}" as="cell" hint-placeholder-count="4">
+                      <td style="padding:10px 14px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 14%, transparent);border-right:1px solid color-mix(in srgb, var(--color-text) 14%, transparent);color:{{ cell.color }};white-space:nowrap">{{ cell.v }}</td>
+                    </sc-for>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:18px 16px;border-top:2px solid var(--color-text);background:var(--color-bg)">
+            <button type="button" onClick="{{ convert }}" class="btn btn-primary" style="background:var(--color-accent);color:var(--color-bg);border:0;font-family:inherit;font-weight:700;font-size:16px;padding:18px 26px;cursor:pointer;text-align:left" style-hover="background:var(--color-accent-600)">Convertir en aplicación</button>
+            <span style="font-size:13.5px;color:var(--color-neutral-700);max-width:38ch">Simulación en tu navegador. No se envía ningún dato.</span>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isConverting }}" hint-placeholder-val="{{ false }}">
+      <div style="border:2px solid var(--color-text);background:var(--color-text);padding:clamp(24px,4vw,56px);min-height:480px;display:flex;flex-direction:column;justify-content:center">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px">
+          <span style="width:10px;height:10px;background:var(--color-accent);display:block;animation:ew-pulse 1s ease-in-out infinite"></span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.12em;color:var(--color-neutral-400)">TRANSFORMANDO</span>
+        </div>
+        <h2 style="margin:0 0 32px;font-size:clamp(26px,3.6vw,44px);font-weight:900;letter-spacing:-0.03em;line-height:1.05;color:var(--color-bg);max-width:22ch">Leyendo el archivo y construyendo la aplicación.</h2>
+        <div style="max-width:640px;display:flex;flex-direction:column;gap:0">
+          <sc-for list="{{ logLines }}" as="lg" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid color-mix(in srgb, var(--color-bg) 20%, transparent);animation:ew-slide .35s ease-out both">
+              <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--color-accent);flex:0 0 auto">{{ lg.mark }}</span>
+              <span style="font-size:15px;font-weight:600;color:var(--color-bg)">{{ lg.text }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="margin-top:32px;height:6px;background:color-mix(in srgb, var(--color-bg) 20%, transparent);max-width:640px">
+          <div style="height:6px;background:var(--color-accent);width:{{ progressWidth }};transition:width .4s ease-out"></div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isApp }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;margin-bottom:clamp(20px,3vw,32px)">
+          <div>
+            <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.12em;color:var(--color-accent);margin-bottom:10px">RESULTADO</div>
+            <h1 style="margin:0;font-size:clamp(26px,3.6vw,42px);font-weight:900;letter-spacing:-0.03em;line-height:1.05;max-width:24ch">Esta es la misma información, hecha aplicación.</h1>
+          </div>
+          <button type="button" onClick="{{ reset }}" style="margin-left:auto;background:transparent;border:2px solid var(--color-text);color:var(--color-text);font-family:inherit;font-weight:700;font-size:14px;padding:13px 18px;cursor:pointer;text-align:left" style-hover="background:var(--color-surface)">Volver al Excel</button>
+        </div>
+
+        <div style="border:2px solid var(--color-text);background:var(--color-neutral-100);display:flex;flex-wrap:wrap;align-items:stretch;box-shadow:var(--shadow-lg)">
+          <nav style="flex:1 1 200px;max-width:100%;background:var(--color-text);display:flex;flex-direction:column">
+            <div style="display:flex;align-items:center;gap:9px;padding:16px;border-bottom:1px solid color-mix(in srgb, var(--color-bg) 20%, transparent)">
+              <span style="width:14px;height:14px;background:var(--color-accent);display:block"></span>
+              <span style="font-size:13.5px;font-weight:800;color:var(--color-bg)">Inventario</span>
+            </div>
+            <sc-for list="{{ appNav }}" as="nv" hint-placeholder-count="5">
+              <button type="button" onClick="{{ nv.select }}" style="border:0;background:{{ nv.bg }};color:{{ nv.fg }};font-family:inherit;font-size:14px;font-weight:{{ nv.weight }};padding:14px 16px;text-align:left;cursor:pointer;border-bottom:1px solid color-mix(in srgb, var(--color-bg) 12%, transparent);display:flex;align-items:center;gap:10px" style-hover="background:var(--color-neutral-800);color:var(--color-bg)">
+                <span style="width:5px;height:5px;background:{{ nv.dot }};display:block;flex:0 0 auto"></span>
+                <span>{{ nv.name }}</span>
+              </button>
+            </sc-for>
+          </nav>
+
+          <section style="flex:999 1 420px;min-width:0;display:flex;flex-direction:column">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:16px;border-bottom:2px solid var(--color-text)">
+              <h2 style="margin:0;font-size:19px;font-weight:900;letter-spacing:-0.02em">{{ appTitle }}</h2>
+              <span style="margin-left:auto;font-size:11px;font-weight:700;padding:6px 9px;background:var(--color-accent-200);color:var(--color-accent-700)">datos ficticios</span>
+            </div>
+
+            <sc-if value="{{ showMetrics }}" hint-placeholder-val="{{ true }}">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));border-bottom:2px solid var(--color-text)">
+                <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="4">
+                  <div style="padding:16px;border-right:1px solid color-mix(in srgb, var(--color-text) 20%, transparent)">
+                    <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-700);margin-bottom:8px">{{ m.label }}</div>
+                    <div style="font-size:clamp(21px,2.4vw,28px);font-weight:900;letter-spacing:-0.03em;line-height:1">{{ m.value }}</div>
+                    <div style="font-size:12px;color:var(--color-neutral-600);margin-top:6px">{{ m.sub }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="padding:18px 16px;border-bottom:2px solid var(--color-text)">
+                <div style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-neutral-700);margin-bottom:14px">Movimientos por día · últimos 14 días</div>
+                <div style="display:flex;align-items:flex-end;gap:5px;height:100px">
+                  <sc-for list="{{ bars }}" as="b" hint-placeholder-count="14">
+                    <div style="flex:1 1 0;min-width:0;background:{{ b.color }};height:{{ b.h }}"></div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ showTable }}" hint-placeholder-val="{{ false }}">
+              <div style="overflow-x:auto;border-bottom:2px solid var(--color-text)">
+                <table class="table" style="width:100%;border-collapse:collapse;min-width:520px">
+                  <thead>
+                    <tr>
+                      <sc-for list="{{ appColumns }}" as="ac" hint-placeholder-count="4">
+                        <th style="text-align:left;padding:12px 16px;background:var(--color-surface);border-bottom:2px solid var(--color-text);font-size:11px;letter-spacing:0.06em;color:var(--color-neutral-700);font-weight:800;text-transform:uppercase;white-space:nowrap">{{ ac }}</th>
+                      </sc-for>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <sc-for list="{{ appRows }}" as="ar" hint-placeholder-count="6">
+                      <tr style="background:var(--color-neutral-100)" style-hover="background:var(--color-surface)">
+                        <sc-for list="{{ ar.cells }}" as="c" hint-placeholder-count="4">
+                          <td style="padding:13px 16px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 15%, transparent);font-size:13.5px;font-weight:{{ c.weight }};color:var(--color-text);white-space:nowrap">
+                            <sc-if value="{{ c.badge }}" hint-placeholder-val="{{ false }}">
+                              <span class="tag" style="font-size:10.5px;font-weight:800;letter-spacing:0.05em;padding:5px 8px;background:{{ c.bg }};color:{{ c.fg }}">{{ c.v }}</span>
+                            </sc-if>
+                            <sc-if value="{{ c.plain }}" hint-placeholder-val="{{ true }}">
+                              <span>{{ c.v }}</span>
+                            </sc-if>
+                          </td>
+                        </sc-for>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ showList }}" hint-placeholder-val="{{ false }}">
+              <div>
+                <sc-for list="{{ listItems }}" as="li" hint-placeholder-count="4">
+                  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:16px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 15%, transparent)">
+                    <span style="width:8px;height:8px;background:{{ li.dot }};display:block;flex:0 0 auto"></span>
+                    <div style="flex:1 1 220px;min-width:0">
+                      <div style="font-size:14.5px;font-weight:700;line-height:1.3">{{ li.title }}</div>
+                      <div style="font-size:13px;color:var(--color-neutral-700);margin-top:4px">{{ li.meta }}</div>
+                    </div>
+                    <span class="tag" style="font-size:10.5px;font-weight:800;letter-spacing:0.05em;padding:6px 9px;background:{{ li.bg }};color:{{ li.fg }};flex:0 0 auto">{{ li.state }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <div style="margin-top:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:16px;border-top:2px solid var(--color-text);background:var(--color-accent-100)">
+              <span style="width:8px;height:8px;background:var(--color-accent);display:block;animation:ew-pulse 1.8s ease-in-out infinite;flex:0 0 auto"></span>
+              <span style="font-size:12.5px;font-weight:600;color:var(--color-accent-700);flex:1 1 200px">{{ footerNote }}</span>
+              <span class="tag tag-outline" style="font-size:11px;font-weight:700;padding:6px 9px;border:1px solid var(--color-accent-300);color:var(--color-accent-700)">Exportar a Excel</span>
+            </div>
+          </section>
+        </div>
+
+        <div style="margin-top:clamp(28px,4vw,48px);border:2px solid var(--color-text);background:var(--color-surface);padding:clamp(22px,3vw,36px);display:flex;flex-wrap:wrap;gap:20px;align-items:center">
+          <div style="flex:1 1 320px">
+            <h3 style="margin:0 0 10px;font-size:clamp(20px,2.4vw,28px);font-weight:900;letter-spacing:-0.025em;line-height:1.1;max-width:26ch">Esto es lo que podemos hacer con tu proceso.</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.55;color:var(--color-neutral-800);max-width:52ch">Cuéntanos cómo trabajas hoy y te devolvemos un diagnóstico con la aplicación propuesta, el alcance y el plazo.</p>
+          </div>
+          <a href="diagnostico.html" class="btn btn-primary" style="background:var(--color-accent);color:var(--color-bg);font-weight:700;font-size:16px;padding:18px 26px;display:block;flex:0 0 auto" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Solicitar diagnóstico</a>
+        </div>
+      </div>
+    </sc-if>
+  </main>
+
+  <footer style="border-top:2px solid var(--color-text);background:var(--color-bg)">
+    <div style="max-width:1280px;margin:0 auto;padding:22px clamp(16px,3vw,32px);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+      <span style="font-size:12.5px;color:var(--color-neutral-600)">Demo conceptual con datos ficticios · ExcelWeb</span>
+      <div style="display:flex;flex-wrap:wrap;gap:20px">
+        <a href="index.html" style="font-size:13px;font-weight:600">Volver al inicio</a>
+        <a href="dashboard.html" style="font-size:13px;font-weight:600">Dashboard conceptual</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { view: "excel", tab: "Productos", page: "Resumen", logStep: 0 };
+
+  componentWillUnmount() { (this._timers || []).forEach(clearTimeout); }
+
+  convert = () => {
+    this._timers = [];
+    this.setState({ view: "converting", logStep: 1 });
+    [2, 3, 4].forEach((n, i) => {
+      this._timers.push(setTimeout(() => this.setState({ logStep: n }), 600 * (i + 1)));
+    });
+    this._timers.push(setTimeout(() => this.setState({ view: "app", page: "Resumen" }), 2500));
+  };
+
+  renderVals() {
+    const { view, tab, page, logStep } = this.state;
+    const ink = "var(--color-text)", paper = "var(--color-bg)", mid = "var(--color-neutral-700)";
+
+    const sheets = {
+      Productos: {
+        formula: '=CONCATENAR(A2;"-";B2)',
+        columns: ["SKU", "Producto", "Categoría", "Precio"],
+        rows: [
+          ["SKU-1042", "Filtro HP", "Filtros", "$12,40"],
+          ["SKU-1043", "Correa 8mm", "Transmisión", "$8,90"],
+          ["SKU-1044", "Bujía std", "Encendido", "$3,20"],
+          ["SKU-1045", "Aceite 5L", "Lubricantes", "$21,00"],
+          ["SKU-1046", "Manguera 1/2", "Fluidos", "$6,75"],
+          ["SKU-1047", "Sensor T2", "Electrónica", "$44,10"]
+        ]
+      },
+      Stock: {
+        formula: '=SI(BUSCARV(A2;Productos!$A:$D;1;0)<>"";C2-D2;"#N/D")',
+        columns: ["SKU", "Stock", "Mínimo", "Estado"],
+        rows: [
+          ["SKU-1042", "18", "40", "PEDIR"],
+          ["SKU-1043", "142", "60", "OK"],
+          ["SKU-1044", "6", "50", "PEDIR"],
+          ["SKU-1045", "#¡REF!", "20", "—"],
+          ["SKU-1046", "77", "30", "OK"],
+          ["SKU-1047", "0", "10", "PEDIR"]
+        ]
+      },
+      Movimientos: {
+        formula: '=SUMAR.SI(Movimientos!B:B;A2;Movimientos!D:D)',
+        columns: ["Fecha", "SKU", "Tipo", "Cantidad"],
+        rows: [
+          ["12/08", "SKU-1042", "Salida", "-24"],
+          ["12/08", "SKU-1043", "Entrada", "+80"],
+          ["13/08", "SKU-1047", "Salida", "-10"],
+          ["14/08", "SKU-1044", "Salida", "-18"],
+          ["14/08", "SKU-1045", "Entrada", "+40"],
+          ["15/08", "SKU-1042", "Salida", "-6"]
+        ]
+      },
+      Proveedores: {
+        formula: '=BUSCARV(A2;Proveedores!$A:$C;3;FALSO)',
+        columns: ["Proveedor", "Contacto", "Plazo", "SKU"],
+        rows: [
+          ["Repuestos Sur", "ventas@sur.cl", "5 días", "SKU-1042"],
+          ["Distrib. Andes", "WhatsApp", "12 días", "SKU-1043"],
+          ["ImportaTec", "compras@it.mx", "20 días", "SKU-1047"],
+          ["Lubrimax", "—", "7 días", "SKU-1045"],
+          ["Repuestos Sur", "ventas@sur.cl", "5 días", "SKU-1044"],
+          ["Sin asignar", "—", "—", "SKU-1046"]
+        ]
+      },
+      Reportes: {
+        formula: '=SUMAPRODUCTO((Movimientos!A:A>=$B$1)*(Movimientos!C:C="Salida")*Movimientos!D:D)',
+        columns: ["Mes", "Salidas", "Entradas", "Valor stock"],
+        rows: [
+          ["Mayo", "412", "380", "$79.100"],
+          ["Junio", "455", "402", "$81.640"],
+          ["Julio", "398", "441", "$83.900"],
+          ["Agosto", "#¡VALOR!", "312", "$84.200"],
+          ["Total", "1.265+", "1.535", "—"],
+          ["", "", "", "revisar fórmula"]
+        ]
+      }
+    };
+
+    const sheet = sheets[tab];
+    const cellColor = v => (String(v).indexOf("#") === 0 || v === "PEDIR" || v === "revisar fórmula") ? "var(--color-accent-700)" : "var(--color-neutral-800)";
+
+    const appPages = {
+      Resumen: {
+        title: "Resumen de inventario",
+        kind: "metrics",
+        note: "Automatización activa: aviso de stock bajo cada mañana a las 8:00"
+      },
+      Productos: {
+        title: "Productos",
+        kind: "table",
+        columns: ["SKU", "Producto", "Stock", "Estado"],
+        rows: [
+          ["SKU-1042", "Filtro HP", "18 u.", { badge: "PEDIR", bg: "var(--color-accent)", fg: "var(--color-bg)" }],
+          ["SKU-1043", "Correa 8mm", "142 u.", { badge: "OK", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }],
+          ["SKU-1044", "Bujía std", "6 u.", { badge: "PEDIR", bg: "var(--color-accent)", fg: "var(--color-bg)" }],
+          ["SKU-1045", "Aceite 5L", "34 u.", { badge: "OK", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }],
+          ["SKU-1046", "Manguera 1/2", "77 u.", { badge: "OK", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }],
+          ["SKU-1047", "Sensor T2", "0 u.", { badge: "AGOTADO", bg: "var(--color-text)", fg: "var(--color-bg)" }]
+        ],
+        note: "El stock se recalcula solo con cada movimiento registrado"
+      },
+      Movimientos: {
+        title: "Movimientos",
+        kind: "table",
+        columns: ["Fecha", "Producto", "Tipo", "Cantidad", "Usuario"],
+        rows: [
+          ["15/08 09:12", "Filtro HP", { badge: "SALIDA", bg: "var(--color-accent-200)", fg: "var(--color-accent-700)" }, "-6", "Marta"],
+          ["14/08 17:40", "Aceite 5L", { badge: "ENTRADA", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }, "+40", "Diego"],
+          ["14/08 11:05", "Bujía std", { badge: "SALIDA", bg: "var(--color-accent-200)", fg: "var(--color-accent-700)" }, "-18", "Marta"],
+          ["13/08 15:22", "Sensor T2", { badge: "SALIDA", bg: "var(--color-accent-200)", fg: "var(--color-accent-700)" }, "-10", "Ana"],
+          ["12/08 10:03", "Correa 8mm", { badge: "ENTRADA", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" }, "+80", "Diego"],
+          ["12/08 08:55", "Filtro HP", { badge: "SALIDA", bg: "var(--color-accent-200)", fg: "var(--color-accent-700)" }, "-24", "Marta"]
+        ],
+        note: "Cada movimiento queda registrado con fecha, cantidad y responsable"
+      },
+      Alertas: {
+        title: "Alertas de stock",
+        kind: "list",
+        items: [
+          { title: "Sensor T2 sin stock", meta: "Plazo del proveedor: 20 días · ImportaTec", state: "CRÍTICO", bg: "var(--color-text)", fg: "var(--color-bg)", dot: "var(--color-accent)" },
+          { title: "Bujía std bajo el mínimo", meta: "6 u. de 50 · Repuestos Sur", state: "PEDIR", bg: "var(--color-accent)", fg: "var(--color-bg)", dot: "var(--color-accent)" },
+          { title: "Filtro HP bajo el mínimo", meta: "18 u. de 40 · Repuestos Sur", state: "PEDIR", bg: "var(--color-accent)", fg: "var(--color-bg)", dot: "var(--color-accent)" },
+          { title: "Manguera 1/2 sin proveedor asignado", meta: "77 u. · falta contacto de compra", state: "REVISAR", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)", dot: "var(--color-neutral-500)" }
+        ],
+        note: "Las alertas se envían por correo al responsable de compras"
+      },
+      Automatizaciones: {
+        title: "Automatizaciones",
+        kind: "list",
+        items: [
+          { title: "Aviso de stock bajo", meta: "Cada día a las 8:00 · correo a compras", state: "ACTIVA", bg: "var(--color-accent)", fg: "var(--color-bg)", dot: "var(--color-accent)" },
+          { title: "Orden de compra en PDF", meta: "Al marcar un producto como PEDIR", state: "ACTIVA", bg: "var(--color-accent)", fg: "var(--color-bg)", dot: "var(--color-accent)" },
+          { title: "Reporte mensual de inventario", meta: "Día 1 de cada mes · Excel + PDF", state: "ACTIVA", bg: "var(--color-accent)", fg: "var(--color-bg)", dot: "var(--color-accent)" },
+          { title: "Recordatorio de conteo físico", meta: "Cada 90 días · aviso al equipo", state: "PAUSADA", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)", dot: "var(--color-neutral-500)" }
+        ],
+        note: "Cuatro tareas que antes dependían de que alguien se acordara"
+      }
+    };
+
+    const cur = appPages[page];
+    const barVals = [38, 62, 48, 80, 55, 94, 70, 44, 66, 52, 88, 41, 73, 59];
+
+    const stages = [
+      { n: "01", label: "Excel actual", active: view === "excel" },
+      { n: "02", label: "Convertir", active: view === "converting" },
+      { n: "03", label: "Transformación", active: view === "converting" },
+      { n: "04", label: "Aplicación web", active: view === "app" }
+    ];
+
+    const logs = [
+      { mark: "✓", text: "5 pestañas leídas · 1.248 filas" },
+      { mark: "✓", text: "12 fórmulas convertidas en reglas de negocio" },
+      { mark: "✓", text: "2 errores de referencia corregidos" },
+      { mark: "✓", text: "Aplicación generada: 4 pantallas, 4 automatizaciones" }
+    ];
+
+    return {
+      isExcel: view === "excel",
+      isConverting: view === "converting",
+      isApp: view === "app",
+      convert: this.convert,
+      reset: () => this.setState({ view: "excel", logStep: 0 }),
+
+      progressSteps: stages.map(s => ({
+        n: s.n, label: s.label,
+        bg: s.active ? "var(--color-accent)" : "transparent",
+        fg: s.active ? "var(--color-bg)" : mid
+      })),
+
+      tabs: Object.keys(sheets).map(name => ({
+        name,
+        bg: name === tab ? "var(--color-surface)" : "transparent",
+        fg: name === tab ? ink : mid,
+        weight: name === tab ? 700 : 500,
+        select: () => this.setState({ tab: name })
+      })),
+      formula: sheet.formula,
+      columns: sheet.columns,
+      rows: sheet.rows.map(cells => ({ cells: cells.map(v => ({ v, color: cellColor(v) })) })),
+
+      logLines: logs.slice(0, logStep),
+      progressWidth: (logStep / 4 * 100) + "%",
+
+      appNav: Object.keys(appPages).map(name => ({
+        name,
+        bg: name === page ? "var(--color-accent)" : "transparent",
+        fg: name === page ? "var(--color-bg)" : "var(--color-neutral-400)",
+        weight: name === page ? 700 : 500,
+        dot: name === page ? "var(--color-bg)" : "var(--color-neutral-600)",
+        select: () => this.setState({ page: name })
+      })),
+      appTitle: cur.title,
+      footerNote: cur.note,
+      showMetrics: cur.kind === "metrics",
+      showTable: cur.kind === "table",
+      showList: cur.kind === "list",
+
+      metrics: [
+        { label: "SKU activos", value: "1.248", sub: "+12 este mes" },
+        { label: "Stock bajo", value: "17", sub: "3 críticos" },
+        { label: "Valor stock", value: "$84,2K", sub: "+0,4% vs julio" },
+        { label: "Salidas hoy", value: "38", sub: "6 pendientes" }
+      ],
+      bars: barVals.map(v => ({ h: v + "%", color: v > 85 ? "var(--color-text)" : "var(--color-accent)" })),
+
+      appColumns: cur.columns || [],
+      appRows: (cur.rows || []).map(cells => ({
+        cells: cells.map((c, i) => typeof c === "object"
+          ? { v: c.badge, badge: true, plain: false, bg: c.bg, fg: c.fg, weight: 700 }
+          : { v: c, badge: false, plain: true, bg: "transparent", fg: ink, weight: i === 0 ? 600 : 400 })
+      })),
+      listItems: cur.items || []
+    };
+  }
+}
+
+</script>
+</body>
+</html>

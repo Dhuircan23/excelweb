@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Especificación para desarrollo — ExcelWeb</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_ds/modernist-dfad2085-fae2-4742-ad7a-1e29b302fce3/styles.css">
+<script src="_ds/modernist-dfad2085-fae2-4742-ad7a-1e29b302fce3/_ds_bundle.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: var(--color-accent-700); text-decoration: none; }
+  a:hover { color: var(--color-accent); }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-accent-300); }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--color-bg)">
+  <header style="border-bottom:2px solid var(--color-text);background:var(--color-bg);position:sticky;top:0;z-index:40">
+    <div style="max-width:1120px;margin:0 auto;padding:0 clamp(16px,3vw,32px);height:64px;display:flex;align-items:center;gap:20px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;color:var(--color-text);font-weight:900;font-size:18px;letter-spacing:-0.02em">
+        <span style="width:20px;height:20px;background:var(--color-accent);display:block"></span>
+        <span>ExcelWeb</span>
+      </a>
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:var(--color-neutral-600);border-left:1px solid color-mix(in srgb, var(--color-text) 30%, transparent);padding-left:20px">ESPECIFICACIÓN</span>
+      <a href="demo.html" style="margin-left:auto;font-size:13.5px;font-weight:700">Demo</a>
+      <a href="dashboard.html" style="font-size:13.5px;font-weight:700">Dashboard</a>
+    </div>
+  </header>
+
+  <div style="max-width:1120px;margin:0 auto;padding:clamp(36px,6vw,80px) clamp(16px,3vw,32px)">
+    <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.12em;color:var(--color-accent);margin-bottom:20px">MVP COMERCIAL · v1 · AGOSTO 2026</div>
+    <h1 style="margin:0;font-size:clamp(32px,5.6vw,68px);font-weight:900;letter-spacing:-0.035em;line-height:0.98;max-width:20ch">Especificación para desarrollo</h1>
+    <p style="margin:clamp(20px,3vw,28px) 0 0;font-size:clamp(16px,1.6vw,20px);line-height:1.55;color:var(--color-neutral-800);max-width:62ch">Todo lo necesario para implementar el MVP sin volver a decidir la UX: rutas, componentes, estados, campos, datos ficticios y prioridades. El diseño de referencia son las cuatro páginas de este proyecto.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(24px,3vw,36px)">
+      <a href="index.html" class="btn btn-secondary" style="border:2px solid var(--color-text);color:var(--color-text);font-size:13.5px;font-weight:700;padding:12px 16px;display:block" style-hover="background:var(--color-surface);color:var(--color-text)">Landing</a>
+      <a href="demo.html" class="btn btn-secondary" style="border:2px solid var(--color-text);color:var(--color-text);font-size:13.5px;font-weight:700;padding:12px 16px;display:block" style-hover="background:var(--color-surface);color:var(--color-text)">Demo</a>
+      <a href="diagnostico.html" class="btn btn-secondary" style="border:2px solid var(--color-text);color:var(--color-text);font-size:13.5px;font-weight:700;padding:12px 16px;display:block" style-hover="background:var(--color-surface);color:var(--color-text)">Diagnóstico</a>
+      <a href="dashboard.html" class="btn btn-secondary" style="border:2px solid var(--color-text);color:var(--color-text);font-size:13.5px;font-weight:700;padding:12px 16px;display:block" style-hover="background:var(--color-surface);color:var(--color-text)">Dashboard</a>
+    </div>
+  </div>
+
+  <sc-for list="{{ sections }}" as="s" hint-placeholder-count="10">
+    <section style="border-top:2px solid var(--color-text);background:{{ s.bg }}">
+      <div style="max-width:1120px;margin:0 auto;padding:clamp(36px,5vw,64px) clamp(16px,3vw,32px)">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:16px;margin-bottom:12px">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:0.12em;color:var(--color-accent)">{{ s.n }}</span>
+          <h2 style="margin:0;font-size:clamp(24px,3.2vw,38px);font-weight:900;letter-spacing:-0.03em;line-height:1.05">{{ s.title }}</h2>
+        </div>
+        <p style="margin:0 0 clamp(22px,3vw,34px);font-size:15.5px;line-height:1.55;color:var(--color-neutral-700);max-width:64ch">{{ s.intro }}</p>
+
+        <sc-if value="{{ s.isTable }}" hint-placeholder-val="{{ false }}">
+          <div style="overflow-x:auto;border:2px solid var(--color-text);background:var(--color-neutral-100)">
+            <table class="table" style="width:100%;border-collapse:collapse;min-width:600px">
+              <thead>
+                <tr>
+                  <sc-for list="{{ s.columns }}" as="c" hint-placeholder-count="3">
+                    <th style="text-align:left;padding:12px 16px;background:var(--color-surface);border-bottom:2px solid var(--color-text);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-neutral-700);font-weight:800;white-space:nowrap">{{ c }}</th>
+                  </sc-for>
+                </tr>
+              </thead>
+              <tbody>
+                <sc-for list="{{ s.rows }}" as="r" hint-placeholder-count="6">
+                  <tr>
+                    <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="3">
+                      <td style="padding:13px 16px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 15%, transparent);font-size:13.5px;line-height:1.45;font-weight:{{ c.weight }};font-family:{{ c.font }};vertical-align:top">{{ c.v }}</td>
+                    </sc-for>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.isCards }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2px;background:var(--color-text);border:2px solid var(--color-text)">
+            <sc-for list="{{ s.cards }}" as="cd" hint-placeholder-count="4">
+              <div style="background:var(--color-bg);padding:clamp(18px,2.2vw,26px);display:flex;flex-direction:column;gap:10px">
+                <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;letter-spacing:0.1em;color:var(--color-neutral-500)">{{ cd.kicker }}</div>
+                <h3 style="margin:0;font-size:18px;font-weight:900;letter-spacing:-0.02em;line-height:1.15">{{ cd.title }}</h3>
+                <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ cd.items }}" as="it" hint-placeholder-count="4">
+                    <li style="display:flex;gap:9px;align-items:flex-start;font-size:13.5px;line-height:1.45;color:var(--color-neutral-800)">
+                      <span style="width:5px;height:5px;background:var(--color-accent);display:block;flex:0 0 auto;margin-top:7px"></span>
+                      <span>{{ it }}</span>
+                    </li>
+                  </sc-for>
+                </ul>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.isFlow }}" hint-placeholder-val="{{ false }}">
+          <div style="border-top:2px solid var(--color-text)">
+            <sc-for list="{{ s.flow }}" as="fl" hint-placeholder-count="13">
+              <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;padding:14px 0;border-bottom:1px solid color-mix(in srgb, var(--color-text) 20%, transparent)">
+                <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--color-accent);flex:0 0 44px">{{ fl.n }}</span>
+                <span style="flex:0 0 auto;font-size:15.5px;font-weight:800;min-width:180px">{{ fl.step }}</span>
+                <span style="flex:1 1 260px;font-size:14px;line-height:1.45;color:var(--color-neutral-700)">{{ fl.detail }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.isNotes }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:0;border-top:2px solid var(--color-text)">
+            <sc-for list="{{ s.notes }}" as="nt" hint-placeholder-count="5">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:clamp(8px,2vw,28px);padding:clamp(16px,2vw,22px) 0;border-bottom:2px solid var(--color-text)">
+                <h3 style="margin:0;font-size:17px;font-weight:900;letter-spacing:-0.02em;line-height:1.2">{{ nt.title }}</h3>
+                <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--color-neutral-800);grid-column:span 2;max-width:70ch">{{ nt.body }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </section>
+  </sc-for>
+
+  <section style="background:var(--color-accent);border-top:2px solid var(--color-text)">
+    <div style="max-width:1120px;margin:0 auto;padding:clamp(40px,6vw,88px) clamp(16px,3vw,32px)">
+      <h2 style="margin:0;font-size:clamp(28px,4.6vw,56px);font-weight:900;letter-spacing:-0.035em;line-height:1;color:var(--color-bg);max-width:24ch">Con esto se puede implementar sin inventar la UX.</h2>
+      <p style="margin:24px 0 0;font-size:clamp(16px,1.6vw,19px);line-height:1.5;color:var(--color-accent-100);max-width:56ch">Lo único no definido aquí es backend, base de datos, autenticación e infraestructura, que quedan para la siguiente fase.</p>
+    </div>
+  </section>
+
+  <footer style="background:var(--color-text);color:var(--color-neutral-400)">
+    <div style="max-width:1120px;margin:0 auto;padding:24px clamp(16px,3vw,32px);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+      <span style="font-size:12.5px;color:var(--color-neutral-600)">ExcelWeb · Especificación del MVP comercial</span>
+      <a href="index.html" style="font-size:13px;font-weight:600;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)">Volver al inicio</a>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  renderVals() {
+    const mono = "ui-monospace, SFMono-Regular, Menlo, monospace";
+    const body = "inherit";
+
+    const T = (columns, rows) => ({
+      isTable: true, columns,
+      rows: rows.map(cells => ({
+        cells: cells.map((c, i) => Array.isArray(c)
+          ? { v: c[0], weight: 600, font: mono }
+          : { v: c, weight: i === 0 ? 700 : 400, font: body })
+      }))
+    });
+
+    const raw = [
+      Object.assign({
+        n: "01", title: "Sitemap y rutas", bg: "var(--color-bg)",
+        intro: "Cuatro rutas públicas más la especificación. Todo el MVP comercial vive en el sitio público; no hay área autenticada en esta fase."
+      }, T(["Ruta", "Página", "Objetivo", "CTA principal"], [
+        [["/"], "Landing", "Explicar el servicio y generar confianza", "Transformar mi Excel"],
+        [["/demo"], "Demo interactiva", "Demostrar la transformación Excel → app", "Solicitar diagnóstico"],
+        [["/diagnostico"], "Formulario de diagnóstico", "Captar la solicitud comercial", "Solicitar diagnóstico"],
+        [["/diagnostico/gracias"], "Confirmación", "Confirmar recepción y fijar expectativas", "Probar la demo"],
+        [["/dashboard-ejemplo"], "Dashboard conceptual", "Mostrar cómo se ve un sistema entregado", "Quiero uno así"],
+        [["/privacidad, /terminos"], "Legales", "Requisito de confianza B2B", "—"]
+      ])),
+
+      Object.assign({
+        n: "02", title: "Arquitectura de la landing", bg: "var(--color-surface)",
+        intro: "Orden fijo de secciones. Cada una tiene un id de ancla usado por la navegación."
+      }, T(["Orden", "Sección", "Ancla", "Contenido"], [
+        ["01", "Navbar", [".sticky"], "Logo, 5 enlaces, CTA. En móvil: CTA visible + menú desplegable"],
+        ["02", "Hero", ["#top"], "Titular, subtítulo, 2 CTA, visual ANTES → DESPUÉS"],
+        ["03", "Problema", ["—"], "7 afirmaciones en rejilla de celdas iguales"],
+        ["04", "Solución", ["—"], "Cadena de 4 pasos: manual → digitalización → automatización → control"],
+        ["05", "Catálogo", ["#servicios"], "4 categorías con sus transformaciones"],
+        ["06", "Cómo funciona", ["#como-funciona"], "4 pasos numerados + CTA"],
+        ["07", "Casos", ["#ejemplos"], "3 casos con antes / transformación / después"],
+        ["08", "Demo teaser", ["—"], "Resumen de 4 pasos + enlace a /demo y /dashboard-ejemplo"],
+        ["09", "Precios", ["#precios"], "3 etapas: diagnóstico, desarrollo, evolución"],
+        ["10", "FAQ", ["#faq"], "10 preguntas en acordeón, una abierta a la vez"],
+        ["11", "CTA final", ["—"], "Póster rojo a sangre con el mensaje de cierre"],
+        ["12", "Footer", ["—"], "Marca, servicios, explorar, contacto, legales"]
+      ])),
+
+      {
+        n: "03", title: "User flow", bg: "var(--color-bg)", isFlow: true,
+        intro: "El recorrido completo, desde la primera visita hasta la entrega del sistema. Los pasos 01–08 son producto; 09–13 son proceso comercial y de servicio.",
+        flow: [
+          { n: "01", step: "Landing", detail: "Entra por búsqueda, referencia o LinkedIn" },
+          { n: "02", step: "Reconoce el problema", detail: "Sección Problema: se identifica con al menos una afirmación" },
+          { n: "03", step: "Entiende la solución", detail: "Cadena manual → control y catálogo de transformaciones" },
+          { n: "04", step: "Ve los casos", detail: "Tres transformaciones concretas con resultado medible" },
+          { n: "05", step: "Prueba la demo", detail: "/demo · convierte el Excel y navega la app resultante" },
+          { n: "06", step: "Solicita diagnóstico", detail: "/diagnostico · 3 pasos, 11 campos, adjuntos opcionales" },
+          { n: "07", step: "Confirmación", detail: "/diagnostico/gracias · plazo de respuesta de 48 h hábiles" },
+          { n: "08", step: "Contacto comercial", detail: "Correo con propuesta de horarios para la sesión" },
+          { n: "09", step: "Análisis del Excel", detail: "Sesión de 45 min + revisión del archivo adjunto" },
+          { n: "10", step: "Propuesta", detail: "Solución propuesta, alcance, plazo y precio cerrado" },
+          { n: "11", step: "Desarrollo", detail: "Diseño, construcción y migración con entregas parciales" },
+          { n: "12", step: "Entrega", detail: "Sistema en producción, capacitación y soporte inicial" },
+          { n: "13", step: "Evolución", detail: "Mantenimiento y nuevos módulos según el uso real" }
+        ]
+      },
+
+      {
+        n: "04", title: "Componentes reutilizables", bg: "var(--color-surface)", isCards: true,
+        intro: "Los componentes que aparecen más de una vez en el diseño. Todos parten del sistema Modernist: 0 de radio, reglas de 2px, etiquetas alineadas a la izquierda.",
+        cards: [
+          { kicker: "ACCIÓN", title: "Button", items: ["primary (relleno rojo)", "secondary (borde 2px)", "ghost", "block en móvil", "estados: hover, active, focus-visible, disabled 45%, loading"] },
+          { kicker: "ETIQUETA", title: "Tag / Badge", items: ["accent (PEDIR, ACTIVA)", "neutral (OK, PAUSADA)", "ink (AGOTADO, ERROR)", "outline (exportar)", "tinte suave (datos ficticios)"] },
+          { kicker: "CONTENIDO", title: "GridCell", items: ["Celda de rejilla con regla de 2px", "kicker mono + titular + cuerpo", "hover: fondo surface", "usada en Problema, Solución, Precios"] },
+          { kicker: "CONTENIDO", title: "CaseCard", items: ["Cabecera con número, título y resultado", "3 columnas: antes / transformación / después", "chips de funcionalidades", "colapsa a 1 columna bajo 780px"] },
+          { kicker: "DATOS", title: "DataTable", items: ["Cabecera surface + regla de 2px", "filas con regla de 1px, hover surface", "celdas de estado usan Tag", "scroll horizontal propio, nunca de la página"] },
+          { kicker: "DATOS", title: "MetricCell", items: ["Etiqueta mono en mayúsculas", "cifra 24–32px peso 900", "delta con color según signo", "rejilla auto-fit desde 130px"] },
+          { kicker: "DATOS", title: "BarChart", items: ["Barras div, sin librería", "altura en %, la máxima en tinta", "etiquetas mono debajo", "sin ejes ni cuadrícula"] },
+          { kicker: "FORMULARIO", title: "Field", items: ["label mono en mayúsculas", "input/textarea/select borde 2px", "error: borde rojo + mensaje", "ayuda opcional bajo el campo"] },
+          { kicker: "FORMULARIO", title: "SegmentedControl", items: ["Opciones en fila, sin radio nativo", "seleccionada: relleno rojo", "envuelve en móvil", "usado en nº de archivos y personas"] },
+          { kicker: "FORMULARIO", title: "ChipGroup", items: ["Selección múltiple", "borde 2px, activo relleno", "contador debajo", "aria-pressed por chip"] },
+          { kicker: "FORMULARIO", title: "FileDropzone", items: ["Borde discontinuo, hover con tinte", "lista los archivos con nombre y peso", "hasta 25 MB", "opcional: nunca bloquea el envío"] },
+          { kicker: "NAVEGACIÓN", title: "AppShell", items: ["Sidebar tinta + contenido", "elemento activo con relleno rojo", "contador opcional por sección", "sidebar pasa arriba bajo 700px"] }
+        ]
+      },
+
+      Object.assign({
+        n: "05", title: "Formulario de diagnóstico", bg: "var(--color-bg)",
+        intro: "Tres pasos. Obligatorios: nombre, empresa, email y la descripción del uso actual de Excel. La validación se dispara al intentar avanzar, no al escribir."
+      }, T(["Paso", "Campo", "Tipo", "Regla"], [
+        ["01", "nombre", "text", "Obligatorio · no vacío"],
+        ["01", "empresa", "text", "Obligatorio · no vacío"],
+        ["01", "email", "email", "Obligatorio · formato nombre@dominio.tld"],
+        ["01", "whatsapp", "tel", "Opcional"],
+        ["01", "industria", "select (9 opciones)", "Opcional · por defecto sin selección"],
+        ["02", "queHaces", "textarea 3 filas", "Obligatorio · no vacío"],
+        ["02", "archivos", "segmented: 1 / 2–5 / 6–15 / +15", "Opcional"],
+        ["02", "personas", "segmented: solo yo / 2–5 / 6–20 / +20", "Opcional"],
+        ["02", "manual", "textarea 2 filas", "Opcional"],
+        ["02", "problemas", "textarea 2 filas", "Opcional"],
+        ["02", "automatizar", "textarea 2 filas", "Opcional"],
+        ["03", "mejoras", "chips múltiples (9 opciones)", "Opcional"],
+        ["03", "adjuntos", "file múltiple", "Opcional · xlsx, csv, pdf, png, jpg · 25 MB"]
+      ])),
+
+      Object.assign({
+        n: "06", title: "Estados de interacción", bg: "var(--color-surface)",
+        intro: "Todos los estados salen de la rampa del acento. No se deja ningún estado por defecto del navegador."
+      }, T(["Estado", "Tratamiento", "Dónde aplica"], [
+        ["Hover", "Fondo surface var(--color-surface) en celdas y filas; var(--color-accent-600) en botón primario", "Botones, filas de tabla, celdas de rejilla, enlaces"],
+        ["Active / pressed", "Un paso más de la rampa (accent-600)", "Botones y controles segmentados"],
+        ["Focus", "Contorno 2px var(--color-accent) con desplazamiento de 2px", "Todo elemento enfocable por teclado"],
+        ["Error", "Borde 2px var(--color-accent) + mensaje en var(--color-accent-700) bajo el campo", "Campos obligatorios al avanzar de paso"],
+        ["Success", "Pantalla de confirmación con póster rojo", "Envío del diagnóstico"],
+        ["Loading", "Etiqueta “Enviando…” y opacidad 45%, botón bloqueado", "Envío del formulario, conversión de la demo"],
+        ["Empty", "Cuadrado de 32px con borde, titular, explicación y una acción", "Reportes y Configuración del dashboard"],
+        ["Disabled", "Opacidad 45%, sin puntero", "Acciones no disponibles"]
+      ])),
+
+      Object.assign({
+        n: "07", title: "Comportamiento responsive", bg: "var(--color-bg)",
+        intro: "Sin tablas que desborden la página y sin scroll horizontal del documento. La rejilla es auto-fit; los tamaños de texto usan clamp."
+      }, T(["Ancho", "Navegación", "Rejillas", "Tablas"], [
+        ["≥ 1024px", "Enlaces + CTA en línea", "3–4 columnas", "Completas, sin scroll"],
+        ["768–1023px", "Enlaces + CTA en línea", "2 columnas por auto-fit", "Scroll horizontal dentro del contenedor"],
+        ["< 900px", "CTA visible + menú desplegable a pantalla completa", "1–2 columnas", "Scroll horizontal dentro del contenedor"],
+        ["< 700px", "Menú desplegable", "1 columna; el sidebar del dashboard pasa arriba", "Scroll horizontal dentro del contenedor"],
+        ["Mínimos", "Área táctil ≥ 44px de alto", "Cuerpo ≥ 15px, etiquetas ≥ 11px", "Celdas con nowrap + ellipsis"]
+      ])),
+
+      Object.assign({
+        n: "08", title: "Datos ficticios utilizados", bg: "var(--color-surface)",
+        intro: "Reutilizar exactamente estos datos evita rehacer el contenido de ejemplo. Todo va marcado con la etiqueta “datos ficticios” en pantalla."
+      }, T(["Conjunto", "Contenido", "Usado en"], [
+        ["Excel de origen", "Control de inventario_v7_FINAL.xlsx · 5 pestañas · 1.248 filas · errores #¡REF! y #¡VALOR!", "Hero de la landing, demo"],
+        ["Productos", "6 SKU (SKU-1042 a SKU-1047) con nombre, categoría, precio y stock", "Demo (Excel y app)"],
+        ["Movimientos", "6 registros con fecha, tipo, cantidad y usuario (Marta, Diego, Ana)", "Demo"],
+        ["Alertas", "4 alertas: 1 crítica, 2 de pedido, 1 de revisión", "Demo, dashboard"],
+        ["Automatizaciones", "6 reglas: 4 activas, 1 pausada, 1 con error", "Demo, dashboard"],
+        ["Clientes", "6 empresas con estado, contacto y responsable", "Dashboard"],
+        ["Procesos", "6 procesos con origen, ejecuciones/mes y ahorro estimado", "Dashboard"],
+        ["Métricas", "6 procesos activos, 58 h/mes ahorradas, 128 clientes, $84,2K de stock", "Hero, demo, dashboard"]
+      ])),
+
+      Object.assign({
+        n: "09", title: "Estructura del dashboard conceptual", bg: "var(--color-bg)",
+        intro: "Seis secciones en el sidebar. Inicio es la única con composición propia; las demás son tabla o empty state."
+      }, T(["Sección", "Tipo", "Contenido"], [
+        ["Inicio", "Composición", "4 métricas, gráfico de 12 semanas, 3 alertas, 5 actividades, 4 tareas"],
+        ["Clientes", "Tabla (badge 4)", "Cliente, contacto, estado, último contacto, responsable"],
+        ["Procesos", "Tabla (badge 3)", "Proceso, origen, ejecuciones/mes, ahorro, estado"],
+        ["Automatizaciones", "Tabla (badge 2)", "Automatización, disparador, última ejecución, estado"],
+        ["Reportes", "Empty state", "Sin reportes propios · acción: crear reporte"],
+        ["Configuración", "Empty state", "Todo configurado · acción: revisar usuarios y permisos"]
+      ])),
+
+      {
+        n: "10", title: "Recomendaciones técnicas y prioridades", bg: "var(--color-surface)", isNotes: true,
+        intro: "Qué construir primero y con qué criterios, sin entrar en backend ni infraestructura.",
+        notes: [
+          { title: "Prioridad 1", body: "Landing y formulario de diagnóstico. Son lo único que capta solicitudes; sin ellos el sitio no genera negocio. Incluye la pantalla de confirmación y el correo automático de acuse de recibo." },
+          { title: "Prioridad 2", body: "Demo interactiva. Es el argumento de venta más fuerte y funciona íntegramente en el navegador, sin datos reales ni backend. Debe cargar en menos de dos segundos y completarse en menos de un minuto." },
+          { title: "Prioridad 3", body: "Dashboard conceptual. Aporta credibilidad pero no convierte por sí solo; puede salir después del lanzamiento con los mismos datos ficticios de la demo." },
+          { title: "Fuera del MVP", body: "Marketplace, comunidad, multiempresa, facturación, IA y panel administrativo. Tampoco entra área autenticada: el dashboard es una página pública de ejemplo, no un producto." },
+          { title: "Stack sugerido", body: "Sitio estático o renderizado en servidor, sin librería de gráficos: las barras son divs con altura en porcentaje. El formulario necesita solo un endpoint que reciba los campos y los adjuntos, y los deje en el correo del equipo comercial." },
+          { title: "Contenido y copy", body: "Los textos de este diseño son definitivos para el lanzamiento. Al cambiar cifras de casos (“20 min → 90 segundos”) hay que mantener el formato antes → después, que es el eje narrativo de toda la página." },
+          { title: "Accesibilidad", body: "Contraste mínimo 4,5:1 en texto de párrafo (usar var(--color-accent-700) en lugar del acento puro para texto pequeño en rojo), etiquetas asociadas a cada campo, aria-expanded en el acordeón, aria-pressed en los chips y foco visible en todo control." },
+          { title: "Medición", body: "Instrumentar cuatro eventos: clic en CTA del hero, inicio de la demo, conversión completada en la demo y envío del diagnóstico. Con eso se sabe si el problema está en el mensaje o en el formulario." }
+        ]
+      }
+    ];
+
+    return {
+      sections: raw.map(s => Object.assign({
+        isTable: false, isCards: false, isFlow: false, isNotes: false,
+        columns: [], rows: [], cards: [], flow: [], notes: []
+      }, s))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

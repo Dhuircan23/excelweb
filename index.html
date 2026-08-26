@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ExcelWeb — Convierte tu Excel en una aplicación web</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_ds/modernist-dfad2085-fae2-4742-ad7a-1e29b302fce3/styles.css">
+<script src="_ds/modernist-dfad2085-fae2-4742-ad7a-1e29b302fce3/_ds_bundle.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: var(--color-accent-700); text-decoration: none; }
+  a:hover { color: var(--color-accent); }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-accent-300); }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  @keyframes ew-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+</style>
+</helmet>
+
+<div id="top" style="background:var(--color-bg)">
+
+  <header style="position:sticky;top:0;z-index:60;background:var(--color-bg);border-bottom:2px solid var(--color-text)">
+    <div style="max-width:1280px;margin:0 auto;padding:0 clamp(16px,3vw,32px);height:68px;display:flex;align-items:center;gap:32px">
+      <a href="#top" style="display:flex;align-items:center;gap:10px;color:var(--color-text);font-weight:900;font-size:19px;letter-spacing:-0.02em;flex:0 0 auto">
+        <span style="width:22px;height:22px;background:var(--color-accent);display:block"></span>
+        <span>ExcelWeb</span>
+      </a>
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <nav style="display:flex;align-items:center;gap:28px;margin-left:auto">
+          <a href="#servicios" style="color:var(--color-neutral-800);font-size:14px;font-weight:600" style-hover="color:var(--color-accent)">Servicios</a>
+          <a href="#como-funciona" style="color:var(--color-neutral-800);font-size:14px;font-weight:600" style-hover="color:var(--color-accent)">Cómo funciona</a>
+          <a href="#ejemplos" style="color:var(--color-neutral-800);font-size:14px;font-weight:600" style-hover="color:var(--color-accent)">Ejemplos</a>
+          <a href="demo.html" style="color:var(--color-neutral-800);font-size:14px;font-weight:600" style-hover="color:var(--color-accent)">Demo</a>
+          <a href="#faq" style="color:var(--color-neutral-800);font-size:14px;font-weight:600" style-hover="color:var(--color-accent)">FAQ</a>
+          <a href="diagnostico.html" class="btn btn-primary" style="background:var(--color-accent);color:var(--color-bg);font-size:14px;font-weight:700;padding:12px 20px;display:block" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Transformar mi Excel</a>
+        </nav>
+      </sc-if>
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+          <a href="diagnostico.html" class="btn btn-primary" style="background:var(--color-accent);color:var(--color-bg);font-size:13px;font-weight:700;padding:11px 14px;display:block" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Transformar mi Excel</a>
+          <button type="button" onClick="{{ toggleMenu }}" aria-label="Abrir menú" style="width:46px;height:46px;background:transparent;border:2px solid var(--color-text);color:var(--color-text);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:pointer;padding:0" style-hover="background:var(--color-surface)">
+            <span style="width:18px;height:2px;background:var(--color-text);display:block"></span>
+            <span style="width:18px;height:2px;background:var(--color-text);display:block"></span>
+            <span style="width:18px;height:2px;background:var(--color-text);display:block"></span>
+          </button>
+        </div>
+      </sc-if>
+    </div>
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <nav style="border-top:2px solid var(--color-text);background:var(--color-surface);display:flex;flex-direction:column">
+        <a href="#servicios" onClick="{{ closeMenu }}" style="padding:18px clamp(16px,3vw,32px);color:var(--color-text);font-weight:700;font-size:16px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 20%, transparent)">Servicios</a>
+        <a href="#como-funciona" onClick="{{ closeMenu }}" style="padding:18px clamp(16px,3vw,32px);color:var(--color-text);font-weight:700;font-size:16px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 20%, transparent)">Cómo funciona</a>
+        <a href="#ejemplos" onClick="{{ closeMenu }}" style="padding:18px clamp(16px,3vw,32px);color:var(--color-text);font-weight:700;font-size:16px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 20%, transparent)">Ejemplos</a>
+        <a href="demo.html" style="padding:18px clamp(16px,3vw,32px);color:var(--color-text);font-weight:700;font-size:16px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 20%, transparent)">Demo interactiva</a>
+        <a href="#precios" onClick="{{ closeMenu }}" style="padding:18px clamp(16px,3vw,32px);color:var(--color-text);font-weight:700;font-size:16px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 20%, transparent)">Precios</a>
+        <a href="#faq" onClick="{{ closeMenu }}" style="padding:18px clamp(16px,3vw,32px);color:var(--color-text);font-weight:700;font-size:16px">FAQ</a>
+      </nav>
+    </sc-if>
+  </header>
+
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(40px,7vw,88px) clamp(16px,3vw,32px) clamp(32px,5vw,64px)">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:clamp(20px,3vw,32px)">
+      <span style="width:8px;height:8px;background:var(--color-accent);display:block"></span>
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-neutral-700)">Procesos manuales → software</span>
+    </div>
+    <h1 style="margin:0;font-weight:900;font-size:clamp(38px,7.2vw,84px);line-height:0.98;letter-spacing:-0.035em;max-width:16ch">Convierte tu Excel en una aplicación web.</h1>
+    <p style="margin:clamp(20px,3vw,28px) 0 0;font-size:clamp(17px,1.6vw,21px);line-height:1.55;color:var(--color-neutral-800);max-width:60ch">Transformamos procesos manuales basados en Excel en herramientas web profesionales, automatizadas y fáciles de usar.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(28px,4vw,40px)">
+      <a href="diagnostico.html" class="btn btn-primary" style="background:var(--color-accent);color:var(--color-bg);font-weight:700;font-size:16px;padding:18px 26px;display:block" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Quiero transformar mi Excel</a>
+      <a href="#como-funciona" class="btn btn-secondary" style="background:transparent;border:2px solid var(--color-text);color:var(--color-text);font-weight:700;font-size:16px;padding:16px 24px;display:block" style-hover="background:var(--color-surface);color:var(--color-text)">Ver cómo funciona</a>
+    </div>
+
+    <div style="margin-top:clamp(40px,6vw,72px);display:flex;flex-wrap:wrap;align-items:stretch;gap:clamp(16px,2.5vw,28px)">
+      <div style="flex:1 1 320px;min-width:0;border:2px solid var(--color-text);background:var(--color-surface);display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:2px solid var(--color-text)">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:var(--color-text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Control de inventario_v7_FINAL.xlsx</span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.1em;color:var(--color-neutral-600);flex:0 0 auto">ANTES</span>
+        </div>
+        <div style="display:flex;overflow:hidden;border-bottom:1px solid color-mix(in srgb, var(--color-text) 25%, transparent)">
+          <span style="padding:8px 12px;font-size:11px;font-weight:700;background:var(--color-bg);border-right:1px solid color-mix(in srgb, var(--color-text) 25%, transparent);white-space:nowrap">Productos</span>
+          <span style="padding:8px 12px;font-size:11px;color:var(--color-neutral-700);border-right:1px solid color-mix(in srgb, var(--color-text) 25%, transparent);white-space:nowrap">Stock</span>
+          <span style="padding:8px 12px;font-size:11px;color:var(--color-neutral-700);border-right:1px solid color-mix(in srgb, var(--color-text) 25%, transparent);white-space:nowrap">Movim.</span>
+          <span style="padding:8px 12px;font-size:11px;color:var(--color-neutral-700);border-right:1px solid color-mix(in srgb, var(--color-text) 25%, transparent);white-space:nowrap">Proveed.</span>
+          <span style="padding:8px 12px;font-size:11px;color:var(--color-neutral-700);white-space:nowrap">Hoja3</span>
+        </div>
+        <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;background:var(--color-neutral-100);padding:8px 12px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 25%, transparent);color:var(--color-neutral-700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">fx  =SI(BUSCARV(A4;Stock!$A:$D;3;0)&lt;C4;"PEDIR";"OK")</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--color-neutral-800);flex:1 1 auto">
+          <sc-for list="{{ excelCells }}" as="cell" hint-placeholder-count="24">
+            <div style="padding:9px 10px;border-right:1px solid color-mix(in srgb, var(--color-text) 14%, transparent);border-bottom:1px solid color-mix(in srgb, var(--color-text) 14%, transparent);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ cell }}</div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;padding:12px 14px;border-top:2px solid var(--color-text)">
+          <span style="font-size:11px;font-weight:600;padding:5px 8px;background:var(--color-bg);border:1px solid color-mix(in srgb, var(--color-text) 30%, transparent);color:var(--color-neutral-700)">copiar y pegar</span>
+          <span style="font-size:11px;font-weight:600;padding:5px 8px;background:var(--color-bg);border:1px solid color-mix(in srgb, var(--color-text) 30%, transparent);color:var(--color-neutral-700)">enviar por WhatsApp</span>
+          <span style="font-size:11px;font-weight:600;padding:5px 8px;background:var(--color-bg);border:1px solid color-mix(in srgb, var(--color-text) 30%, transparent);color:var(--color-neutral-700)">7 versiones del archivo</span>
+        </div>
+      </div>
+
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 4px">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.1em;color:var(--color-neutral-600);writing-mode:vertical-rl;text-orientation:mixed">TRANSFORMACIÓN</span>
+          <span style="font-size:34px;font-weight:900;color:var(--color-accent);line-height:1">→</span>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1 1 100%;display:flex;align-items:center;justify-content:center;gap:12px;padding:4px 0">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.1em;color:var(--color-neutral-600)">TRANSFORMACIÓN</span>
+          <span style="font-size:26px;font-weight:900;color:var(--color-accent);line-height:1">↓</span>
+        </div>
+      </sc-if>
+
+      <div style="flex:1 1 340px;min-width:0;border:2px solid var(--color-text);background:var(--color-neutral-100);display:flex;flex-direction:column;box-shadow:var(--shadow-lg)">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:2px solid var(--color-text);background:var(--color-text)">
+          <span style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--color-bg)"><span style="width:12px;height:12px;background:var(--color-accent);display:block"></span>Inventario · ExcelWeb</span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.1em;color:var(--color-neutral-400);flex:0 0 auto">DESPUÉS</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr))">
+          <sc-for list="{{ heroMetrics }}" as="m" hint-placeholder-count="3">
+            <div style="padding:14px;border-right:1px solid color-mix(in srgb, var(--color-text) 20%, transparent);border-bottom:2px solid var(--color-text)">
+              <div style="font-size:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0.08em;color:var(--color-neutral-700);text-transform:uppercase;margin-bottom:6px">{{ m.label }}</div>
+              <div style="font-size:clamp(20px,2.4vw,27px);font-weight:900;letter-spacing:-0.03em;line-height:1">{{ m.value }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="padding:14px;border-bottom:2px solid var(--color-text)">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-neutral-700);margin-bottom:12px">Salidas por semana</div>
+          <div style="display:flex;align-items:flex-end;gap:6px;height:74px">
+            <sc-for list="{{ heroBars }}" as="bar" hint-placeholder-count="9">
+              <div style="flex:1 1 0;background:var(--color-accent);min-width:0;height:{{ bar.h }}"></div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="flex:1 1 auto">
+          <sc-for list="{{ heroRows }}" as="row" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid color-mix(in srgb, var(--color-text) 18%, transparent)">
+              <span style="flex:1 1 auto;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ row.name }}</span>
+              <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--color-neutral-700);flex:0 0 auto">{{ row.qty }}</span>
+              <span style="font-size:10px;font-weight:800;letter-spacing:0.06em;padding:4px 7px;flex:0 0 auto;background:{{ row.bg }};color:{{ row.fg }}">{{ row.state }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:12px 14px;border-top:2px solid var(--color-text);background:var(--color-accent-100)">
+          <span style="width:8px;height:8px;background:var(--color-accent);display:block;animation:ew-pulse 1.8s ease-in-out infinite"></span>
+          <span style="font-size:12px;font-weight:600;color:var(--color-accent-700)">Automatización activa: aviso de stock bajo enviado por correo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="border-top:2px solid var(--color-text)"></div>
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(44px,6vw,80px) clamp(16px,3vw,32px)">
+    <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:16px;margin-bottom:clamp(28px,4vw,44px)">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:0.12em;color:var(--color-accent)">01</span>
+      <h2 style="margin:0;font-weight:900;font-size:clamp(28px,4vw,46px);letter-spacing:-0.03em;line-height:1.05;max-width:22ch">Probablemente esto te suena.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));border-top:2px solid var(--color-text);border-left:2px solid var(--color-text)">
+      <sc-for list="{{ problems }}" as="p" hint-placeholder-count="7">
+        <div style="padding:clamp(20px,2.5vw,28px);border-right:2px solid var(--color-text);border-bottom:2px solid var(--color-text);background:var(--color-bg)" style-hover="background:var(--color-surface)">
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--color-neutral-500);margin-bottom:14px">{{ p.n }}</div>
+          <p style="margin:0;font-size:clamp(15px,1.4vw,17px);font-weight:600;line-height:1.4">{{ p.text }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <div style="border-top:2px solid var(--color-text)"></div>
+  <section style="background:var(--color-surface)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(44px,6vw,80px) clamp(16px,3vw,32px)">
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:16px;margin-bottom:clamp(28px,4vw,44px)">
+        <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:0.12em;color:var(--color-accent)">02</span>
+        <h2 style="margin:0;font-weight:900;font-size:clamp(28px,4vw,46px);letter-spacing:-0.03em;line-height:1.05;max-width:24ch">De archivo suelto a proceso bajo control.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:var(--color-text);border:2px solid var(--color-text)">
+        <sc-for list="{{ chain }}" as="s" hint-placeholder-count="4">
+          <div style="background:var(--color-bg);padding:clamp(20px,2.5vw,30px);display:flex;flex-direction:column;gap:12px;min-height:190px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:var(--color-neutral-500)">{{ s.step }}</span>
+              <span style="font-size:20px;font-weight:900;color:var(--color-accent);line-height:1">{{ s.arrow }}</span>
+            </div>
+            <h3 style="margin:0;font-size:clamp(19px,2vw,24px);font-weight:900;letter-spacing:-0.02em;line-height:1.1">{{ s.title }}</h3>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:var(--color-neutral-800)">{{ s.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <div style="border-top:2px solid var(--color-text)"></div>
+  <section id="servicios" style="max-width:1280px;margin:0 auto;padding:clamp(44px,6vw,80px) clamp(16px,3vw,32px);scroll-margin-top:80px">
+    <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:16px;margin-bottom:16px">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:0.12em;color:var(--color-accent)">03</span>
+      <h2 style="margin:0;font-weight:900;font-size:clamp(28px,4vw,46px);letter-spacing:-0.03em;line-height:1.05">Qué podemos transformar</h2>
+    </div>
+    <p style="margin:0 0 clamp(28px,4vw,44px);font-size:17px;line-height:1.55;color:var(--color-neutral-800);max-width:56ch">No vendemos funciones sueltas. Tomamos un proceso completo y lo dejamos funcionando en la web.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(16px,2vw,24px)">
+      <sc-for list="{{ catalog }}" as="c" hint-placeholder-count="4">
+        <div style="border:2px solid var(--color-text);background:var(--color-neutral-100);display:flex;flex-direction:column">
+          <div style="padding:clamp(18px,2vw,24px);border-bottom:2px solid var(--color-text)">
+            <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:10px">{{ c.kicker }}</div>
+            <h3 style="margin:0;font-size:clamp(20px,2vw,25px);font-weight:900;letter-spacing:-0.025em;line-height:1.1">{{ c.title }}</h3>
+          </div>
+          <ul style="margin:0;padding:clamp(16px,2vw,22px);list-style:none;display:flex;flex-direction:column;gap:10px;flex:1 1 auto">
+            <sc-for list="{{ c.items }}" as="it" hint-placeholder-count="5">
+              <li style="display:flex;align-items:flex-start;gap:10px;font-size:14.5px;line-height:1.4;color:var(--color-neutral-800)">
+                <span style="width:6px;height:6px;background:var(--color-accent);display:block;flex:0 0 auto;margin-top:7px"></span>
+                <span>{{ it }}</span>
+              </li>
+            </sc-for>
+          </ul>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <div style="border-top:2px solid var(--color-text)"></div>
+  <section id="como-funciona" style="max-width:1280px;margin:0 auto;padding:clamp(44px,6vw,80px) clamp(16px,3vw,32px);scroll-margin-top:80px">
+    <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:16px;margin-bottom:clamp(28px,4vw,44px)">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:0.12em;color:var(--color-accent)">04</span>
+      <h2 style="margin:0;font-weight:900;font-size:clamp(28px,4vw,46px);letter-spacing:-0.03em;line-height:1.05">Cómo funciona</h2>
+    </div>
+    <div style="border-top:2px solid var(--color-text)">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(8px,2vw,32px);padding:clamp(22px,3vw,32px) 0;border-bottom:2px solid var(--color-text);align-items:start">
+          <div style="display:flex;align-items:baseline;gap:16px">
+            <span style="font-size:clamp(34px,4vw,52px);font-weight:900;letter-spacing:-0.04em;color:var(--color-accent);line-height:0.9">{{ st.n }}</span>
+            <h3 style="margin:0;font-size:clamp(21px,2.2vw,28px);font-weight:900;letter-spacing:-0.025em;line-height:1.1">{{ st.title }}</h3>
+          </div>
+          <p style="margin:0;font-size:16px;line-height:1.55;color:var(--color-neutral-800);max-width:52ch">{{ st.body }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start">
+            <sc-for list="{{ st.tags }}" as="t" hint-placeholder-count="2">
+              <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;padding:6px 9px;border:1px solid color-mix(in srgb, var(--color-text) 35%, transparent);color:var(--color-neutral-700)">{{ t }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:clamp(24px,3vw,36px)">
+      <a href="diagnostico.html" class="btn btn-primary" style="background:var(--color-accent);color:var(--color-bg);font-weight:700;font-size:16px;padding:18px 26px;display:inline-block" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Quiero analizar mi proceso</a>
+    </div>
+  </section>
+
+  <div style="border-top:2px solid var(--color-text)"></div>
+  <section id="ejemplos" style="background:var(--color-surface);scroll-margin-top:80px">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(44px,6vw,80px) clamp(16px,3vw,32px)">
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:16px;margin-bottom:16px">
+        <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:0.12em;color:var(--color-accent)">05</span>
+        <h2 style="margin:0;font-weight:900;font-size:clamp(28px,4vw,46px);letter-spacing:-0.03em;line-height:1.05">Casos de ejemplo</h2>
+      </div>
+      <p style="margin:0 0 clamp(28px,4vw,44px);font-size:15px;line-height:1.55;color:var(--color-neutral-700);max-width:56ch">Ejemplos ilustrativos construidos con datos ficticios, basados en procesos que se repiten en casi cualquier negocio.</p>
+      <div style="display:flex;flex-direction:column;gap:clamp(16px,2vw,24px)">
+        <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="3">
+          <div style="border:2px solid var(--color-text);background:var(--color-bg)">
+            <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;padding:clamp(16px,2vw,22px);border-bottom:2px solid var(--color-text)">
+              <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:var(--color-accent)">{{ cs.n }}</span>
+              <h3 style="margin:0;font-size:clamp(20px,2.2vw,27px);font-weight:900;letter-spacing:-0.025em;line-height:1.1">{{ cs.title }}</h3>
+              <sc-if value="{{ showCaseResults }}" hint-placeholder-val="{{ true }}">
+                <span style="margin-left:auto;font-size:11px;font-weight:700;padding:6px 9px;background:var(--color-accent-200);color:var(--color-accent-700)">{{ cs.result }}</span>
+              </sc-if>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+              <div style="padding:clamp(18px,2vw,26px);border-right:2px solid var(--color-text);border-bottom:2px solid var(--color-text)">
+                <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.12em;color:var(--color-neutral-600);margin-bottom:14px">ANTES</div>
+                <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px">
+                  <sc-for list="{{ cs.before }}" as="b" hint-placeholder-count="3">
+                    <li style="font-size:14.5px;line-height:1.45;color:var(--color-neutral-700)">{{ b }}</li>
+                  </sc-for>
+                </ul>
+              </div>
+              <div style="padding:clamp(18px,2vw,26px);border-right:2px solid var(--color-text);border-bottom:2px solid var(--color-text);background:var(--color-neutral-100)">
+                <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.12em;color:var(--color-accent);margin-bottom:14px">TRANSFORMACIÓN</div>
+                <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--color-neutral-800)">{{ cs.change }}</p>
+              </div>
+              <div style="padding:clamp(18px,2vw,26px);border-bottom:2px solid var(--color-text)">
+                <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.12em;color:var(--color-text);margin-bottom:14px">DESPUÉS</div>
+                <p style="margin:0 0 14px;font-size:15px;font-weight:700;line-height:1.35">{{ cs.after }}</p>
+                <div style="display:flex;flex-wrap:wrap;gap:6px">
+                  <sc-for list="{{ cs.features }}" as="f" hint-placeholder-count="5">
+                    <span style="font-size:11px;font-weight:700;padding:6px 9px;background:var(--color-text);color:var(--color-bg)">{{ f }}</span>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <div style="border-top:2px solid var(--color-text)"></div>
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(44px,6vw,80px) clamp(16px,3vw,32px)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,4vw,56px);align-items:center">
+      <div>
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:16px;margin-bottom:16px">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:0.12em;color:var(--color-accent)">06</span>
+          <h2 style="margin:0;font-weight:900;font-size:clamp(28px,4vw,46px);letter-spacing:-0.03em;line-height:1.05;max-width:20ch">Míralo funcionando antes de hablar con nosotros.</h2>
+        </div>
+        <p style="margin:0 0 28px;font-size:17px;line-height:1.55;color:var(--color-neutral-800);max-width:52ch">Abre un Excel de inventario ficticio, pulsa convertir y navega la aplicación resultante. Toma menos de un minuto.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <a href="demo.html" class="btn btn-primary" style="background:var(--color-accent);color:var(--color-bg);font-weight:700;font-size:16px;padding:18px 26px;display:block" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Probar la demo</a>
+          <a href="dashboard.html" class="btn btn-secondary" style="background:transparent;border:2px solid var(--color-text);color:var(--color-text);font-weight:700;font-size:16px;padding:16px 24px;display:block" style-hover="background:var(--color-surface);color:var(--color-text)">Ver dashboard conceptual</a>
+        </div>
+      </div>
+      <div style="border:2px solid var(--color-text);background:var(--color-text);padding:clamp(16px,2vw,24px)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+          <span style="width:10px;height:10px;background:var(--color-accent);display:block"></span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:var(--color-neutral-400)">DEMO INTERACTIVA</span>
+        </div>
+        <sc-for list="{{ demoSteps }}" as="d" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid color-mix(in srgb, var(--color-bg) 22%, transparent)">
+            <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--color-neutral-600);flex:0 0 auto">{{ d.n }}</span>
+            <span style="font-size:15px;font-weight:600;color:var(--color-bg)">{{ d.text }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <div style="border-top:2px solid var(--color-text)"></div>
+  <section id="precios" style="background:var(--color-surface);scroll-margin-top:80px">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(44px,6vw,80px) clamp(16px,3vw,32px)">
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:16px;margin-bottom:16px">
+        <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:0.12em;color:var(--color-accent)">07</span>
+        <h2 style="margin:0;font-weight:900;font-size:clamp(28px,4vw,46px);letter-spacing:-0.03em;line-height:1.05">Cada proceso es diferente</h2>
+      </div>
+      <p style="margin:0 0 clamp(28px,4vw,44px);font-size:17px;line-height:1.55;color:var(--color-neutral-800);max-width:56ch">Por eso no publicamos una tarifa fija. Trabajamos en tres etapas y el alcance se define después del diagnóstico.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;background:var(--color-text);border:2px solid var(--color-text)">
+        <sc-for list="{{ pricing }}" as="pr" hint-placeholder-count="3">
+          <div style="background:var(--color-bg);padding:clamp(22px,2.5vw,32px);display:flex;flex-direction:column;gap:14px">
+            <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:var(--color-neutral-500)">{{ pr.step }}</div>
+            <h3 style="margin:0;font-size:clamp(22px,2.2vw,29px);font-weight:900;letter-spacing:-0.025em;line-height:1.1">{{ pr.title }}</h3>
+            <p style="margin:0;font-size:15px;line-height:1.5;color:var(--color-neutral-800);flex:1 1 auto">{{ pr.body }}</p>
+            <div style="font-size:12px;font-weight:700;letter-spacing:0.04em;color:var(--color-accent-700);border-top:1px solid color-mix(in srgb, var(--color-text) 25%, transparent);padding-top:14px">{{ pr.note }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ showPriceHint }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:clamp(20px,3vw,28px) 0 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;letter-spacing:0.04em;color:var(--color-neutral-700)">{{ priceHint }}</p>
+      </sc-if>
+      <div style="margin-top:clamp(24px,3vw,36px)">
+        <a href="diagnostico.html" class="btn btn-primary" style="background:var(--color-accent);color:var(--color-bg);font-weight:700;font-size:16px;padding:18px 26px;display:inline-block" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Solicitar diagnóstico</a>
+      </div>
+    </div>
+  </section>
+
+  <div style="border-top:2px solid var(--color-text)"></div>
+  <section id="faq" style="max-width:1280px;margin:0 auto;padding:clamp(44px,6vw,80px) clamp(16px,3vw,32px);scroll-margin-top:80px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(24px,4vw,56px);align-items:start">
+      <div>
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:16px">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:0.12em;color:var(--color-accent)">08</span>
+          <h2 style="margin:0;font-weight:900;font-size:clamp(28px,4vw,46px);letter-spacing:-0.03em;line-height:1.05">Preguntas frecuentes</h2>
+        </div>
+        <p style="margin:20px 0 0;font-size:16px;line-height:1.55;color:var(--color-neutral-800);max-width:40ch">Si falta la tuya, escríbela en el formulario de diagnóstico y la respondemos ahí.</p>
+      </div>
+      <div style="border-top:2px solid var(--color-text)">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="10">
+          <div style="border-bottom:2px solid var(--color-text)">
+            <button type="button" onClick="{{ f.toggle }}" aria-expanded="{{ f.expanded }}" style="width:100%;background:transparent;border:0;padding:20px 0;display:flex;align-items:center;gap:16px;cursor:pointer;text-align:left;font-family:inherit" style-hover="color:var(--color-accent)">
+              <span style="flex:1 1 auto;font-size:clamp(15px,1.5vw,17.5px);font-weight:700;line-height:1.35;color:inherit">{{ f.q }}</span>
+              <span style="flex:0 0 auto;font-size:20px;font-weight:900;color:var(--color-accent);line-height:1;width:20px;text-align:center">{{ f.sign }}</span>
+            </button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0;padding:0 36px 22px 0;font-size:15.5px;line-height:1.6;color:var(--color-neutral-800);max-width:64ch">{{ f.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--color-accent);border-top:2px solid var(--color-text)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(52px,8vw,110px) clamp(16px,3vw,32px)">
+      <h2 style="margin:0;font-weight:900;font-size:clamp(34px,6.4vw,76px);line-height:0.98;letter-spacing:-0.035em;color:var(--color-bg);max-width:20ch">Tu Excel puede ser mucho más que un archivo.</h2>
+      <p style="margin:clamp(20px,3vw,28px) 0 clamp(28px,4vw,40px);font-size:clamp(17px,1.7vw,21px);line-height:1.5;color:var(--color-accent-100);max-width:52ch">Convierte procesos manuales en herramientas digitales diseñadas para tu negocio.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a href="diagnostico.html" style="background:var(--color-text);color:var(--color-bg);font-weight:700;font-size:16px;padding:18px 26px;display:block" style-hover="background:var(--color-neutral-900);color:var(--color-bg)">Quiero transformar mi proceso</a>
+        <a href="demo.html" style="background:transparent;border:2px solid var(--color-bg);color:var(--color-bg);font-weight:700;font-size:16px;padding:16px 24px;display:block" style-hover="background:var(--color-accent-600);color:var(--color-bg)">Probar la demo</a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:var(--color-text);color:var(--color-neutral-400)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(36px,5vw,64px) clamp(16px,3vw,32px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(24px,3vw,40px)">
+        <div style="max-width:34ch">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <span style="width:20px;height:20px;background:var(--color-accent);display:block"></span>
+            <span style="font-weight:900;font-size:18px;color:var(--color-bg);letter-spacing:-0.02em">ExcelWeb</span>
+          </div>
+          <p style="margin:0;font-size:14px;line-height:1.55">Transformamos procesos manuales basados en Excel en aplicaciones web profesionales y automatizadas.</p>
+        </div>
+        <div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.12em;color:var(--color-neutral-600);margin-bottom:16px">SERVICIOS</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <a href="#servicios" style="font-size:14px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)">Excel de gestión</a>
+            <a href="#servicios" style="font-size:14px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)">Procesos administrativos</a>
+            <a href="#servicios" style="font-size:14px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)">Herramientas internas</a>
+            <a href="#servicios" style="font-size:14px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)">Automatizaciones</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.12em;color:var(--color-neutral-600);margin-bottom:16px">EXPLORAR</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <a href="demo.html" style="font-size:14px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)">Demo interactiva</a>
+            <a href="dashboard.html" style="font-size:14px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)">Dashboard conceptual</a>
+            <a href="diagnostico.html" style="font-size:14px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)">Diagnóstico</a>
+            <a href="especificacion.html" style="font-size:14px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)">Especificación</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.12em;color:var(--color-neutral-600);margin-bottom:16px">CONTACTO</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <a href="mailto:hola@excelweb.app" style="font-size:14px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)">hola@excelweb.app</a>
+            <span style="font-size:14px">WhatsApp comercial</span>
+            <span style="font-size:14px">Lun–Vie, 9:00–18:00</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:clamp(28px,4vw,48px);padding-top:20px;border-top:1px solid color-mix(in srgb, var(--color-bg) 20%, transparent);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+        <span style="font-size:12.5px;color:var(--color-neutral-600)">© 2026 ExcelWeb. Todos los derechos reservados.</span>
+        <div style="display:flex;flex-wrap:wrap;gap:20px">
+          <a href="#top" style="font-size:12.5px;color:var(--color-neutral-600)" style-hover="color:var(--color-accent)">Privacidad</a>
+          <a href="#top" style="font-size:12.5px;color:var(--color-neutral-600)" style-hover="color:var(--color-accent)">Términos</a>
+          <a href="#top" style="font-size:12.5px;color:var(--color-neutral-600)" style-hover="color:var(--color-accent)">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showPriceHint&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Precios&quot;},&quot;priceHint&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Proyectos desde 3 semanas de desarrollo&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Precios&quot;},&quot;showCaseResults&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Casos&quot;},&quot;faqOpenByDefault&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;min&quot;:-1,&quot;max&quot;:9,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;FAQ&quot;}}">
+class Component extends DCLogic {
+  state = { width: typeof window === "undefined" ? 1280 : window.innerWidth, menuOpen: false, openFaq: this.props.faqOpenByDefault ?? 0 };
+
+  componentDidMount() {
+    this._onResize = () => this.setState({ width: window.innerWidth });
+    window.addEventListener("resize", this._onResize);
+  }
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  renderVals() {
+    const w = this.state.width;
+    const isMobile = w < 900;
+
+    const faqData = [
+      ["¿Tengo que cambiar mi Excel?", "No. Partimos de lo que ya usas. Tu Excel es la mejor documentación de tu proceso, así que lo tomamos como punto de partida en lugar de pedirte que lo rehagas."],
+      ["¿Pueden trabajar con mi Excel actual?", "Sí. Nos lo envías tal como está, con sus pestañas y sus fórmulas, y de ahí sacamos la lógica del sistema."],
+      ["¿Pueden mantener mis cálculos?", "Sí. Replicamos las fórmulas dentro de la aplicación y las validamos contigo comparando resultados con tu archivo original."],
+      ["¿Pueden automatizar tareas?", "Sí: envío de correos, generación de documentos, avisos, recordatorios y cálculos que hoy haces a mano."],
+      ["¿Puedo seguir exportando a Excel?", "Sí. Toda tabla y todo reporte se puede descargar en Excel o CSV cuando lo necesites."],
+      ["¿Puedo descargar reportes?", "Sí, en Excel o PDF, y también se pueden programar para que lleguen por correo cada semana o cada mes."],
+      ["¿Cuánto demora un proyecto?", "Un proceso acotado suele estar listo entre 3 y 6 semanas. Después del diagnóstico te damos un plazo concreto."],
+      ["¿Cuánto cuesta?", "Depende del proceso. El diagnóstico define el alcance y con eso te entregamos una propuesta cerrada, sin sorpresas."],
+      ["¿Qué tipo de empresas pueden utilizar el servicio?", "Cualquier empresa que dependa de Excel para operar: comercio, servicios, distribución, consultoría, salud, manufactura."],
+      ["¿Necesito conocimientos técnicos?", "No. Tú conoces tu proceso, nosotros la parte técnica. La aplicación se entrega con una sesión de uso para tu equipo."]
+    ];
+
+    return {
+      showPriceHint: this.props.showPriceHint ?? false,
+      priceHint: this.props.priceHint ?? "Proyectos desde 3 semanas de desarrollo",
+      showCaseResults: this.props.showCaseResults ?? true,
+      isMobile,
+      isDesktop: !isMobile,
+      menuOpen: isMobile && this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+
+      excelCells: [
+        "SKU-1042", "Filtro HP", "18", "PEDIR",
+        "SKU-1043", "Correa 8mm", "142", "OK",
+        "SKU-1044", "Bujía std", "6", "PEDIR",
+        "SKU-1045", "Aceite 5L", "#¡REF!", "—",
+        "SKU-1046", "Manguera", "77", "OK",
+        "SKU-1047", "Sensor T2", "0", "PEDIR"
+      ],
+      heroMetrics: [
+        { label: "SKU activos", value: "1.248" },
+        { label: "Stock bajo", value: "17" },
+        { label: "Valor stock", value: "$84,2K" }
+      ],
+      heroBars: [
+        { h: "38%" }, { h: "62%" }, { h: "48%" }, { h: "80%" },
+        { h: "55%" }, { h: "94%" }, { h: "70%" }, { h: "44%" }, { h: "66%" }
+      ],
+      heroRows: [
+        { name: "Filtro HP", qty: "18 u.", state: "PEDIR", bg: "var(--color-accent)", fg: "var(--color-bg)" },
+        { name: "Correa 8mm", qty: "142 u.", state: "OK", bg: "var(--color-neutral-300)", fg: "var(--color-neutral-800)" },
+        { name: "Sensor T2", qty: "0 u.", state: "AGOTADO", bg: "var(--color-text)", fg: "var(--color-bg)" }
+      ],
+
+      problems: [
+        { n: "01", text: "Tu negocio depende de varios Excel que solo una persona entiende del todo." },
+        { n: "02", text: "Hay que copiar y pegar información entre archivos, correos y WhatsApp." },
+        { n: "03", text: "Los cálculos viven en fórmulas largas que nadie se atreve a tocar." },
+        { n: "04", text: "Armar el reporte del mes toma horas que podrían ser minutos." },
+        { n: "05", text: "Los archivos se duplican: v2, v3, final, final_ok." },
+        { n: "06", text: "La información está dispersa y nunca coincide del todo." },
+        { n: "07", text: "Si esa persona no está, el proceso se detiene." }
+      ],
+
+      chain: [
+        { step: "PASO 1", arrow: "→", title: "Proceso manual", body: "Tu Excel actual, con sus pestañas, sus fórmulas y sus pasos a mano." },
+        { step: "PASO 2", arrow: "→", title: "Digitalización", body: "Los datos pasan a un sistema web con formularios, validaciones y permisos." },
+        { step: "PASO 3", arrow: "→", title: "Automatización", body: "Cálculos, avisos, documentos y correos ocurren solos, sin que nadie los recuerde." },
+        { step: "PASO 4", arrow: "■", title: "Control", body: "Dashboards y reportes al día, con una sola versión de la verdad." }
+      ],
+
+      catalog: [
+        { kicker: "CATEGORÍA 01", title: "Excel de gestión", items: ["Ventas", "Inventarios", "Clientes", "Presupuestos", "Costos", "Operaciones"] },
+        { kicker: "CATEGORÍA 02", title: "Procesos administrativos", items: ["Formularios", "Registros", "Seguimiento", "Documentos", "Reportes"] },
+        { kicker: "CATEGORÍA 03", title: "Herramientas internas", items: ["Dashboards", "Calculadoras", "Sistemas de seguimiento", "Paneles de control"] },
+        { kicker: "CATEGORÍA 04", title: "Automatizaciones", items: ["Correos automáticos", "Generación de documentos", "Notificaciones", "Recordatorios", "Integraciones"] }
+      ],
+
+      steps: [
+        { n: "01", title: "Analizamos", body: "Nos muestras tu Excel o nos explicas el proceso. Identificamos qué se repite, qué se calcula y dónde se pierde tiempo.", tags: ["Sesión de 45 min", "Revisión del archivo"] },
+        { n: "02", title: "Diseñamos", body: "Convertimos esa lógica en una experiencia web: pantallas, formularios, reglas y reportes, revisados contigo antes de programar.", tags: ["Wireframes", "Flujo de usuario"] },
+        { n: "03", title: "Construimos", body: "Programamos la aplicación y las automatizaciones, migrando tus datos actuales y validando los cálculos contra tu Excel.", tags: ["Desarrollo", "Migración de datos"] },
+        { n: "04", title: "Entregamos", body: "Recibes el sistema funcionando, con capacitación para tu equipo y soporte durante las primeras semanas de uso.", tags: ["Capacitación", "Soporte inicial"] }
+      ],
+
+      cases: [
+        {
+          n: "CASO 01", title: "Inventario", result: "Reporte de 4 h → 2 min",
+          before: ["Excel con productos, stock y movimientos en pestañas distintas.", "El stock real se calcula a mano al cierre del día.", "Los faltantes se descubren cuando ya faltan."],
+          change: "Un único registro de productos y movimientos, con reglas de stock mínimo y avisos automáticos por correo.",
+          after: "Dashboard de inventario",
+          features: ["Stock en vivo", "Productos", "Alertas", "Movimientos", "Reportes"]
+        },
+        {
+          n: "CASO 02", title: "Gestión de clientes", result: "Cero seguimientos perdidos",
+          before: ["Excel de contactos, conversaciones en WhatsApp y documentos en carpetas.", "Nadie sabe en qué quedó cada cliente.", "El seguimiento depende de la memoria."],
+          change: "Un CRM simple con estados, historial por cliente y recordatorios que se generan solos.",
+          after: "CRM simple",
+          features: ["Clientes", "Estado", "Seguimiento", "Historial", "Recordatorios"]
+        },
+        {
+          n: "CASO 03", title: "Cotizaciones", result: "20 min → 90 segundos",
+          before: ["Excel para calcular, Word para el documento y copiar y pegar entre ambos.", "Precios desactualizados según quién cotiza.", "No hay registro de lo enviado."],
+          change: "Un generador web que toma cliente y productos, calcula el total y produce el PDF listo para enviar.",
+          after: "Generador de cotizaciones",
+          features: ["Cliente", "Productos", "Cálculo", "PDF", "Envío"]
+        }
+      ],
+
+      demoSteps: [
+        { n: "01", text: "Abres “Control de inventario.xlsx”" },
+        { n: "02", text: "Pulsas “Convertir en aplicación”" },
+        { n: "03", text: "Ves la transformación en pantalla" },
+        { n: "04", text: "Navegas la aplicación resultante" }
+      ],
+
+      pricing: [
+        { step: "ETAPA 01", title: "Diagnóstico", body: "Revisamos tu proceso y tu archivo, y te entregamos un documento con la solución propuesta, el alcance y el plazo.", note: "Punto de partida de todo proyecto" },
+        { step: "ETAPA 02", title: "Desarrollo", body: "Diseñamos y construimos la aplicación y sus automatizaciones, con entregas parciales que puedes revisar.", note: "Precio cerrado según alcance" },
+        { step: "ETAPA 03", title: "Evolución", body: "Mantenemos el sistema, corregimos lo que aparece con el uso real y añadimos módulos cuando el negocio lo pide.", note: "Acompañamiento mensual opcional" }
+      ],
+
+      faqs: faqData.map(([q, a], i) => ({
+        q, a,
+        open: this.state.openFaq === i,
+        expanded: this.state.openFaq === i ? "true" : "false",
+        sign: this.state.openFaq === i ? "–" : "+",
+        toggle: () => this.setState(s => ({ openFaq: s.openFaq === i ? -1 : i }))
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

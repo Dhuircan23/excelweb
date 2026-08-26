@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnóstico de automatización — ExcelWeb</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_ds/modernist-dfad2085-fae2-4742-ad7a-1e29b302fce3/styles.css">
+<script src="_ds/modernist-dfad2085-fae2-4742-ad7a-1e29b302fce3/_ds_bundle.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: var(--color-accent-700); text-decoration: none; }
+  a:hover { color: var(--color-accent); }
+  p { text-wrap: pretty; }
+  input, textarea, select, button { font-family: inherit; }
+  ::selection { background: var(--color-accent-300); }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  input::placeholder, textarea::placeholder { color: var(--color-neutral-500); }
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;background:var(--color-bg)">
+  <header style="border-bottom:2px solid var(--color-text);background:var(--color-bg)">
+    <div style="max-width:1080px;margin:0 auto;padding:0 clamp(16px,3vw,32px);height:64px;display:flex;align-items:center;gap:20px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;color:var(--color-text);font-weight:900;font-size:18px;letter-spacing:-0.02em">
+        <span style="width:20px;height:20px;background:var(--color-accent);display:block"></span>
+        <span>ExcelWeb</span>
+      </a>
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:var(--color-neutral-600);border-left:1px solid color-mix(in srgb, var(--color-text) 30%, transparent);padding-left:20px">DIAGNÓSTICO</span>
+      <a href="demo.html" style="margin-left:auto;font-size:13.5px;font-weight:700">Ver la demo</a>
+    </div>
+  </header>
+
+  <main style="flex:1 1 auto;max-width:1080px;width:100%;margin:0 auto;padding:clamp(28px,4vw,56px) clamp(16px,3vw,32px)">
+
+    <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <h1 style="margin:0 0 14px;font-size:clamp(28px,4.2vw,50px);font-weight:900;letter-spacing:-0.032em;line-height:1.02;max-width:22ch">Diagnóstico de automatización</h1>
+        <p style="margin:0 0 clamp(28px,4vw,44px);font-size:17px;line-height:1.55;color:var(--color-neutral-800);max-width:58ch">Cuéntanos cómo trabajas hoy. Con eso preparamos una propuesta concreta: qué aplicación construir, qué se automatiza y cuánto toma. Sin costo y sin compromiso.</p>
+
+        <div style="display:flex;gap:2px;background:var(--color-text);border:2px solid var(--color-text);margin-bottom:clamp(24px,3vw,36px)">
+          <sc-for list="{{ stepTabs }}" as="st" hint-placeholder-count="3">
+            <div style="flex:1 1 0;min-width:0;background:{{ st.bg }};padding:14px 16px">
+              <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.1em;color:{{ st.numFg }};margin-bottom:6px">{{ st.n }}</div>
+              <div style="font-size:13.5px;font-weight:700;color:{{ st.fg }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ st.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <form onSubmit="{{ onSubmit }}" style="border:2px solid var(--color-text);background:var(--color-neutral-100)">
+
+          <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:clamp(20px,3vw,34px);display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(16px,2vw,24px)">
+              <label style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">Nombre *</span>
+                <input type="text" value="{{ f.nombre }}" onChange="{{ set.nombre }}" placeholder="Tu nombre y apellido" style="border:2px solid {{ err.nombre }};background:var(--color-bg);padding:14px;font-size:15px;color:var(--color-text);width:100%" />
+                <sc-if value="{{ show.nombre }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px;font-weight:600;color:var(--color-accent-700)">Necesitamos tu nombre para responderte.</span></sc-if>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">Empresa *</span>
+                <input type="text" value="{{ f.empresa }}" onChange="{{ set.empresa }}" placeholder="Nombre de la empresa" style="border:2px solid {{ err.empresa }};background:var(--color-bg);padding:14px;font-size:15px;color:var(--color-text);width:100%" />
+                <sc-if value="{{ show.empresa }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px;font-weight:600;color:var(--color-accent-700)">Indica la empresa o el nombre de tu negocio.</span></sc-if>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">Email *</span>
+                <input type="email" value="{{ f.email }}" onChange="{{ set.email }}" placeholder="nombre@empresa.com" style="border:2px solid {{ err.email }};background:var(--color-bg);padding:14px;font-size:15px;color:var(--color-text);width:100%" />
+                <sc-if value="{{ show.email }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px;font-weight:600;color:var(--color-accent-700)">Revisa el correo: falta el formato nombre@dominio.</span></sc-if>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">WhatsApp</span>
+                <input type="tel" value="{{ f.whatsapp }}" onChange="{{ set.whatsapp }}" placeholder="+00 000 000 000" style="border:2px solid color-mix(in srgb, var(--color-text) 35%, transparent);background:var(--color-bg);padding:14px;font-size:15px;color:var(--color-text);width:100%" />
+                <span style="font-size:12.5px;color:var(--color-neutral-600)">Opcional. Solo si prefieres que te escribamos ahí.</span>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">Industria</span>
+                <select value="{{ f.industria }}" onChange="{{ set.industria }}" style="border:2px solid color-mix(in srgb, var(--color-text) 35%, transparent);background:var(--color-bg);padding:14px;font-size:15px;color:var(--color-text);width:100%">
+                  <sc-for list="{{ industrias }}" as="op" hint-placeholder-count="8">
+                    <option value="{{ op }}">{{ op }}</option>
+                  </sc-for>
+                </select>
+              </label>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:clamp(20px,3vw,34px);display:flex;flex-direction:column;gap:clamp(18px,2.2vw,26px)">
+              <label style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">¿Qué haces actualmente con Excel? *</span>
+                <textarea rows="3" value="{{ f.queHaces }}" onChange="{{ set.queHaces }}" placeholder="Por ejemplo: controlo el inventario y calculo los precios de venta." style="border:2px solid {{ err.queHaces }};background:var(--color-bg);padding:14px;font-size:15px;color:var(--color-text);width:100%;resize:vertical"></textarea>
+                <sc-if value="{{ show.queHaces }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px;font-weight:600;color:var(--color-accent-700)">Cuéntanos brevemente para qué usas el archivo.</span></sc-if>
+              </label>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(16px,2vw,24px)">
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">¿Cuántos archivos utilizas?</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:2px;background:var(--color-text);border:2px solid var(--color-text)">
+                    <sc-for list="{{ archivosOpts }}" as="op" hint-placeholder-count="4">
+                      <button type="button" onClick="{{ op.select }}" style="flex:1 1 auto;background:{{ op.bg }};color:{{ op.fg }};border:0;padding:12px 14px;font-size:13.5px;font-weight:700;cursor:pointer;text-align:left;white-space:nowrap" style-hover="background:var(--color-surface);color:var(--color-text)">{{ op.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">¿Cuántas personas usan el proceso?</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:2px;background:var(--color-text);border:2px solid var(--color-text)">
+                    <sc-for list="{{ personasOpts }}" as="op" hint-placeholder-count="4">
+                      <button type="button" onClick="{{ op.select }}" style="flex:1 1 auto;background:{{ op.bg }};color:{{ op.fg }};border:0;padding:12px 14px;font-size:13.5px;font-weight:700;cursor:pointer;text-align:left;white-space:nowrap" style-hover="background:var(--color-surface);color:var(--color-text)">{{ op.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+              <label style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">¿Qué partes son manuales?</span>
+                <textarea rows="2" value="{{ f.manual }}" onChange="{{ set.manual }}" placeholder="Copiar y pegar entre pestañas, armar el reporte, enviar avisos…" style="border:2px solid color-mix(in srgb, var(--color-text) 35%, transparent);background:var(--color-bg);padding:14px;font-size:15px;color:var(--color-text);width:100%;resize:vertical"></textarea>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">¿Qué problemas tienes actualmente?</span>
+                <textarea rows="2" value="{{ f.problemas }}" onChange="{{ set.problemas }}" placeholder="Errores, duplicados, demoras, información que no coincide…" style="border:2px solid color-mix(in srgb, var(--color-text) 35%, transparent);background:var(--color-bg);padding:14px;font-size:15px;color:var(--color-text);width:100%;resize:vertical"></textarea>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">¿Qué te gustaría automatizar?</span>
+                <textarea rows="2" value="{{ f.automatizar }}" onChange="{{ set.automatizar }}" placeholder="Avisos de stock, envío de cotizaciones, reporte mensual…" style="border:2px solid color-mix(in srgb, var(--color-text) 35%, transparent);background:var(--color-bg);padding:14px;font-size:15px;color:var(--color-text);width:100%;resize:vertical"></textarea>
+              </label>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:clamp(20px,3vw,34px);display:flex;flex-direction:column;gap:clamp(20px,2.5vw,30px)">
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">¿Qué quieres mejorar?</span>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ mejorasOpts }}" as="op" hint-placeholder-count="9">
+                    <button type="button" onClick="{{ op.toggle }}" aria-pressed="{{ op.pressed }}" style="background:{{ op.bg }};color:{{ op.fg }};border:2px solid {{ op.border }};padding:11px 15px;font-size:13.5px;font-weight:700;cursor:pointer;text-align:left" style-hover="border-color:var(--color-accent)">{{ op.label }}</button>
+                  </sc-for>
+                </div>
+                <span style="font-size:12.5px;color:var(--color-neutral-600)">{{ mejorasCount }}</span>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <span style="font-size:12.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-neutral-800)">Adjuntar material (opcional)</span>
+                <label style="border:2px dashed var(--color-divider);background:var(--color-bg);padding:clamp(20px,3vw,32px);display:flex;flex-wrap:wrap;gap:14px;align-items:center;cursor:pointer" style-hover="border-color:var(--color-accent);background:var(--color-accent-100)">
+                  <span style="width:26px;height:26px;background:var(--color-accent);display:block;flex:0 0 auto"></span>
+                  <span style="flex:1 1 220px;min-width:0">
+                    <span style="display:block;font-size:15px;font-weight:700;margin-bottom:4px">Excel, PDF, capturas o documentación</span>
+                    <span style="display:block;font-size:13px;color:var(--color-neutral-700)">Arrastra los archivos aquí o haz clic para elegirlos. Hasta 25 MB.</span>
+                  </span>
+                  <input type="file" multiple onChange="{{ onFiles }}" style="display:none" />
+                  <span style="font-size:13px;font-weight:700;border:2px solid var(--color-text);padding:11px 15px;flex:0 0 auto">Elegir archivos</span>
+                </label>
+                <sc-if value="{{ hasFiles }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:1px;background:color-mix(in srgb, var(--color-text) 20%, transparent)">
+                    <sc-for list="{{ files }}" as="fl" hint-placeholder-count="1">
+                      <div style="background:var(--color-bg);padding:12px 14px;display:flex;gap:12px;align-items:center">
+                        <span style="width:6px;height:6px;background:var(--color-accent);display:block;flex:0 0 auto"></span>
+                        <span style="flex:1 1 auto;font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ fl.name }}</span>
+                        <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--color-neutral-600);flex:0 0 auto">{{ fl.size }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+
+              <div style="border-top:1px solid color-mix(in srgb, var(--color-text) 25%, transparent);padding-top:20px">
+                <p style="margin:0;font-size:13.5px;line-height:1.55;color:var(--color-neutral-700);max-width:60ch">Tratamos tu archivo como información confidencial y lo usamos solo para preparar el diagnóstico. Puedes pedir que lo eliminemos en cualquier momento.</p>
+              </div>
+            </div>
+          </sc-if>
+
+          <div style="border-top:2px solid var(--color-text);padding:clamp(16px,2vw,24px);display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--color-surface)">
+            <sc-if value="{{ canGoBack }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ back }}" class="btn btn-secondary" style="background:transparent;border:2px solid var(--color-text);color:var(--color-text);font-weight:700;font-size:15px;padding:15px 20px;cursor:pointer;text-align:left" style-hover="background:var(--color-bg)">Atrás</button>
+            </sc-if>
+            <sc-if value="{{ canGoNext }}" hint-placeholder-val="{{ true }}">
+              <button type="button" onClick="{{ next }}" class="btn btn-primary" style="background:var(--color-accent);border:0;color:var(--color-bg);font-weight:700;font-size:15px;padding:17px 24px;cursor:pointer;text-align:left" style-hover="background:var(--color-accent-600)">Continuar</button>
+            </sc-if>
+            <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+              <button type="submit" class="btn btn-primary" style="background:var(--color-accent);border:0;color:var(--color-bg);font-weight:700;font-size:16px;padding:18px 26px;cursor:pointer;text-align:left;opacity:{{ submitOpacity }}" style-hover="background:var(--color-accent-600)">{{ submitLabel }}</button>
+            </sc-if>
+            <span style="margin-left:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--color-neutral-600)">{{ stepCounter }}</span>
+          </div>
+        </form>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+      <div style="border:2px solid var(--color-text);background:var(--color-neutral-100);box-shadow:var(--shadow-lg)">
+        <div style="background:var(--color-accent);padding:clamp(24px,4vw,48px)">
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.12em;color:var(--color-accent-100);margin-bottom:16px">SOLICITUD RECIBIDA</div>
+          <h1 style="margin:0;font-size:clamp(28px,4.4vw,52px);font-weight:900;letter-spacing:-0.032em;line-height:1.02;color:var(--color-bg);max-width:22ch">Listo. Ya tenemos tu proceso.</h1>
+        </div>
+        <div style="padding:clamp(24px,3.5vw,42px)">
+          <p style="margin:0 0 28px;font-size:17px;line-height:1.55;color:var(--color-neutral-800);max-width:56ch">Gracias, {{ nombreCorto }}. Revisaremos lo que nos contaste y te escribiremos a <strong style="font-weight:800">{{ emailFinal }}</strong> en un plazo de 48 horas hábiles.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:var(--color-text);border:2px solid var(--color-text);margin-bottom:32px">
+            <sc-for list="{{ nextSteps }}" as="ns" hint-placeholder-count="3">
+              <div style="background:var(--color-bg);padding:clamp(18px,2.2vw,26px)">
+                <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:10px">{{ ns.n }}</div>
+                <h3 style="margin:0 0 8px;font-size:17px;font-weight:900;letter-spacing:-0.02em;line-height:1.15">{{ ns.title }}</h3>
+                <p style="margin:0;font-size:13.5px;line-height:1.5;color:var(--color-neutral-700)">{{ ns.body }}</p>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:12px">
+            <a href="demo.html" class="btn btn-primary" style="background:var(--color-text);color:var(--color-bg);font-weight:700;font-size:15px;padding:17px 24px;display:block" style-hover="background:var(--color-neutral-900);color:var(--color-bg)">Mientras esperas, prueba la demo</a>
+            <a href="index.html" class="btn btn-secondary" style="background:transparent;border:2px solid var(--color-text);color:var(--color-text);font-weight:700;font-size:15px;padding:15px 22px;display:block" style-hover="background:var(--color-surface);color:var(--color-text)">Volver al inicio</a>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </main>
+
+  <footer style="border-top:2px solid var(--color-text);background:var(--color-bg)">
+    <div style="max-width:1080px;margin:0 auto;padding:22px clamp(16px,3vw,32px);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+      <span style="font-size:12.5px;color:var(--color-neutral-600)">Prototipo de formulario · no se envía información</span>
+      <a href="index.html" style="font-size:13px;font-weight:600">ExcelWeb</a>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = {
+    step: 1, submitted: false, touched: {}, sending: false,
+    files: [], mejoras: [],
+    f: { nombre: "", empresa: "", email: "", whatsapp: "", industria: "Selecciona una industria",
+         queHaces: "", archivos: "", personas: "", manual: "", problemas: "", automatizar: "" }
+  };
+
+  setField = k => e => {
+    const v = e.target.value;
+    this.setState(s => ({ f: Object.assign({}, s.f, { [k]: v }) }));
+  };
+
+  invalid(k) {
+    const v = (this.state.f[k] || "").trim();
+    if (k === "email") return !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    return v.length === 0;
+  }
+
+  next = () => {
+    const required = this.state.step === 1 ? ["nombre", "empresa", "email"] : ["queHaces"];
+    const bad = required.filter(k => this.invalid(k));
+    if (bad.length) {
+      const t = Object.assign({}, this.state.touched);
+      required.forEach(k => { t[k] = true; });
+      this.setState({ touched: t });
+      return;
+    }
+    this.setState(s => ({ step: Math.min(3, s.step + 1) }));
+  };
+
+  back = () => this.setState(s => ({ step: Math.max(1, s.step - 1) }));
+
+  onSubmit = e => {
+    e.preventDefault();
+    if (this.state.sending) return;
+    this.setState({ sending: true });
+    setTimeout(() => this.setState({ submitted: true, sending: false }), 700);
+  };
+
+  renderVals() {
+    const { step, f, touched, files, mejoras, submitted, sending } = this.state;
+    const ok = "color-mix(in srgb, var(--color-text) 35%, transparent)";
+    const bad = "var(--color-accent)";
+    const keys = ["nombre", "empresa", "email", "queHaces"];
+
+    const err = {}, show = {};
+    keys.forEach(k => {
+      const isBad = touched[k] && this.invalid(k);
+      err[k] = isBad ? bad : ok;
+      show[k] = !!isBad;
+    });
+
+    const seg = (key, opts) => opts.map(label => ({
+      label,
+      bg: f[key] === label ? "var(--color-accent)" : "var(--color-bg)",
+      fg: f[key] === label ? "var(--color-bg)" : "var(--color-neutral-800)",
+      select: () => this.setState(s => ({ f: Object.assign({}, s.f, { [key]: label }) }))
+    }));
+
+    const mejoras_all = ["Gestión", "Inventario", "Ventas", "Clientes", "Reportes", "Cálculos", "Documentos", "Automatizaciones", "Otro"];
+
+    const stepLabels = [["01", "Información"], ["02", "Proceso"], ["03", "Objetivo"]];
+
+    return {
+      submitted, notSubmitted: !submitted,
+      isStep1: !submitted && step === 1,
+      isStep2: !submitted && step === 2,
+      isStep3: !submitted && step === 3,
+      canGoBack: step > 1,
+      canGoNext: step < 3,
+      next: this.next, back: this.back, onSubmit: this.onSubmit,
+      stepCounter: "Paso " + step + " de 3",
+      submitLabel: sending ? "Enviando…" : "Solicitar diagnóstico",
+      submitOpacity: sending ? 0.45 : 1,
+
+      stepTabs: stepLabels.map(([n, label], i) => ({
+        n, label,
+        bg: step === i + 1 ? "var(--color-accent)" : (step > i + 1 ? "var(--color-text)" : "var(--color-bg)"),
+        fg: step >= i + 1 ? "var(--color-bg)" : "var(--color-neutral-700)",
+        numFg: step >= i + 1 ? "var(--color-accent-300)" : "var(--color-neutral-500)"
+      })),
+
+      f, err, show,
+      set: {
+        nombre: this.setField("nombre"), empresa: this.setField("empresa"), email: this.setField("email"),
+        whatsapp: this.setField("whatsapp"), industria: this.setField("industria"),
+        queHaces: this.setField("queHaces"), manual: this.setField("manual"),
+        problemas: this.setField("problemas"), automatizar: this.setField("automatizar")
+      },
+
+      industrias: ["Selecciona una industria", "Comercio y retail", "Distribución y logística", "Servicios profesionales", "Salud", "Manufactura", "Construcción", "Educación", "Otra"],
+      archivosOpts: seg("archivos", ["1", "2–5", "6–15", "Más de 15"]),
+      personasOpts: seg("personas", ["Solo yo", "2–5", "6–20", "Más de 20"]),
+
+      mejorasOpts: mejoras_all.map(label => {
+        const on = mejoras.indexOf(label) !== -1;
+        return {
+          label, pressed: on ? "true" : "false",
+          bg: on ? "var(--color-accent)" : "var(--color-bg)",
+          fg: on ? "var(--color-bg)" : "var(--color-neutral-800)",
+          border: on ? "var(--color-accent)" : "color-mix(in srgb, var(--color-text) 35%, transparent)",
+          toggle: () => this.setState(s => ({
+            mejoras: s.mejoras.indexOf(label) === -1 ? s.mejoras.concat([label]) : s.mejoras.filter(x => x !== label)
+          }))
+        };
+      }),
+      mejorasCount: mejoras.length === 0 ? "Puedes elegir varios." : mejoras.length + " seleccionado" + (mejoras.length > 1 ? "s" : ""),
+
+      onFiles: e => {
+        const list = Array.from(e.target.files || []).map(x => ({
+          name: x.name,
+          size: x.size > 1048576 ? (x.size / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(x.size / 1024)) + " KB"
+        }));
+        this.setState({ files: list });
+      },
+      files, hasFiles: files.length > 0,
+
+      nombreCorto: (f.nombre.trim().split(" ")[0]) || "gracias por escribir",
+      emailFinal: f.email.trim() || "tu correo",
+      nextSteps: [
+        { n: "PASO 01", title: "Revisamos tu proceso", body: "Leemos lo que nos contaste y el material que adjuntaste." },
+        { n: "PASO 02", title: "Sesión de 45 minutos", body: "Te proponemos horarios para resolver dudas sobre el proceso." },
+        { n: "PASO 03", title: "Propuesta concreta", body: "Recibes la solución propuesta, el alcance, el plazo y el precio." }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>
