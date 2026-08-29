@@ -1,0 +1,30 @@
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  background: var(--color-bg);
+  color: var(--color-neutral-800);
+  border: 2px solid color-mix(in srgb, var(--color-text) 35%, transparent);
+  padding: 11px 15px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+.chip:hover {
+  border-color: var(--color-accent);
+}
+.chipActive {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+
+.count {
+  font-size: 12.5px;
+  color: var(--color-neutral-600);
+}

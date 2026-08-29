@@ -1,0 +1,45 @@
+.empty {
+  padding: clamp(36px, 6vw, 80px) 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  border-bottom: 2px solid var(--color-text);
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--color-text);
+  display: block;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  max-width: 24ch;
+}
+
+.body {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-neutral-700);
+  max-width: 48ch;
+}
+
+.cta {
+  background: var(--color-accent);
+  border: 0;
+  color: var(--color-bg);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 16px 22px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.cta:hover {
+  background: var(--color-accent-600);
+}

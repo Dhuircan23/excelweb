@@ -1,0 +1,915 @@
+.section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(44px, 6vw, 80px) clamp(16px, 3vw, 32px);
+}
+
+.sectionSurface {
+  background: var(--color-surface);
+}
+
+.divider {
+  border-top: 2px solid var(--color-text);
+}
+
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: clamp(28px, 4vw, 44px);
+}
+
+.sectionHeadTight {
+  margin-bottom: 16px;
+}
+
+.kicker {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+}
+
+.h2 {
+  margin: 0;
+  font-weight: 900;
+  font-size: clamp(28px, 4vw, 46px);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.lede {
+  margin: 0 0 clamp(28px, 4vw, 44px);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--color-neutral-800);
+  max-width: 56ch;
+}
+
+/* — hero — */
+.hero {
+  padding: clamp(40px, 7vw, 88px) clamp(16px, 3vw, 32px) clamp(32px, 5vw, 64px);
+}
+
+.heroEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: clamp(20px, 3vw, 32px);
+}
+.heroEyebrowDot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent);
+  display: block;
+}
+.heroEyebrowText {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-neutral-700);
+}
+
+.h1 {
+  margin: 0;
+  font-weight: 900;
+  font-size: clamp(38px, 7.2vw, 84px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  max-width: 16ch;
+}
+
+.heroSub {
+  margin: clamp(20px, 3vw, 28px) 0 0;
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: 1.55;
+  color: var(--color-neutral-800);
+  max-width: 60ch;
+}
+
+.heroCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(28px, 4vw, 40px);
+}
+
+.ctaPrimary {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-weight: 700;
+  font-size: 16px;
+  padding: 18px 26px;
+  display: block;
+}
+.ctaPrimary:hover {
+  background: var(--color-accent-600);
+  color: var(--color-bg);
+}
+
+.ctaSecondary {
+  background: transparent;
+  border: 2px solid var(--color-text);
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 16px;
+  padding: 16px 24px;
+  display: block;
+}
+.ctaSecondary:hover {
+  background: var(--color-surface);
+}
+
+.compare {
+  margin-top: clamp(40px, 6vw, 72px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: clamp(16px, 2.5vw, 28px);
+}
+
+.excelCard {
+  flex: 1 1 320px;
+  min-width: 0;
+  border: 2px solid var(--color-text);
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+}
+
+.excelCardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--color-text);
+}
+
+.excelFileName {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.excelBadge {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--color-neutral-600);
+  flex: 0 0 auto;
+}
+
+.excelTabs {
+  display: flex;
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 25%, transparent);
+}
+.excelTab {
+  padding: 8px 12px;
+  font-size: 11px;
+  color: var(--color-neutral-700);
+  border-right: 1px solid color-mix(in srgb, var(--color-text) 25%, transparent);
+  white-space: nowrap;
+}
+.excelTabActive {
+  font-weight: 700;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.excelFormula {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  background: var(--color-neutral-100);
+  padding: 8px 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 25%, transparent);
+  color: var(--color-neutral-700);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.excelGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: var(--color-neutral-800);
+  flex: 1 1 auto;
+}
+.excelCell {
+  padding: 9px 10px;
+  border-right: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.excelTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 14px;
+  border-top: 2px solid var(--color-text);
+}
+.excelTag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 8px;
+  background: var(--color-bg);
+  border: 1px solid color-mix(in srgb, var(--color-text) 30%, transparent);
+  color: var(--color-neutral-700);
+}
+
+.transform {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+.transformLabel {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--color-neutral-600);
+}
+.transformArrow {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+@media (min-width: 640px) {
+  .transform {
+    flex-direction: column;
+    padding: 0 4px;
+  }
+  .transformLabel {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+  .transformArrow {
+    font-size: 34px;
+  }
+}
+
+.appCard {
+  flex: 1 1 340px;
+  min-width: 0;
+  border: 2px solid var(--color-text);
+  background: var(--color-neutral-100);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+}
+
+.appCardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--color-text);
+  background: var(--color-text);
+}
+.appCardHeadLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-bg);
+}
+.appCardHeadDot {
+  width: 12px;
+  height: 12px;
+  background: var(--color-accent);
+  display: block;
+}
+
+.heroMetrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+}
+.heroMetric {
+  padding: 14px;
+  border-right: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);
+  border-bottom: 2px solid var(--color-text);
+}
+.heroMetricLabel {
+  font-size: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.08em;
+  color: var(--color-neutral-700);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.heroMetricValue {
+  font-size: clamp(20px, 2.4vw, 27px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.heroChart {
+  padding: 14px;
+  border-bottom: 2px solid var(--color-text);
+}
+.heroChartLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-neutral-700);
+  margin-bottom: 12px;
+}
+
+.heroRows {
+  flex: 1 1 auto;
+}
+.heroRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 18%, transparent);
+}
+.heroRowName {
+  flex: 1 1 auto;
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.heroRowQty {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  color: var(--color-neutral-700);
+  flex: 0 0 auto;
+}
+
+.heroFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-top: 2px solid var(--color-text);
+  background: var(--color-accent-100);
+}
+.heroFooterDot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent);
+  display: block;
+  animation: ew-pulse 1.8s ease-in-out infinite;
+  flex: 0 0 auto;
+}
+.heroFooterText {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-accent-700);
+}
+
+/* — problems grid — */
+.problemsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  border-top: 2px solid var(--color-text);
+  border-left: 2px solid var(--color-text);
+}
+.problemCell {
+  padding: clamp(20px, 2.5vw, 28px);
+  border-right: 2px solid var(--color-text);
+  border-bottom: 2px solid var(--color-text);
+  background: var(--color-bg);
+}
+.problemCell:hover {
+  background: var(--color-surface);
+}
+.problemN {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: var(--color-neutral-500);
+  margin-bottom: 14px;
+}
+.problemText {
+  margin: 0;
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* — chain — */
+.chainGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2px;
+  background: var(--color-text);
+  border: 2px solid var(--color-text);
+}
+.chainCell {
+  background: var(--color-bg);
+  padding: clamp(20px, 2.5vw, 30px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 190px;
+}
+.chainHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chainStep {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--color-neutral-500);
+}
+.chainArrow {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--color-accent);
+  line-height: 1;
+}
+.chainTitle {
+  margin: 0;
+  font-size: clamp(19px, 2vw, 24px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.chainBody {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-neutral-800);
+}
+
+/* — catalog — */
+.catalogGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+.catalogCard {
+  border: 2px solid var(--color-text);
+  background: var(--color-neutral-100);
+  display: flex;
+  flex-direction: column;
+}
+.catalogCardHead {
+  padding: clamp(18px, 2vw, 24px);
+  border-bottom: 2px solid var(--color-text);
+}
+.catalogKicker {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  margin-bottom: 10px;
+}
+.catalogTitle {
+  margin: 0;
+  font-size: clamp(20px, 2vw, 25px);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.catalogList {
+  margin: 0;
+  padding: clamp(16px, 2vw, 22px);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 auto;
+}
+.catalogItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14.5px;
+  line-height: 1.4;
+  color: var(--color-neutral-800);
+}
+.catalogDot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent);
+  display: block;
+  flex: 0 0 auto;
+  margin-top: 7px;
+}
+
+/* — steps — */
+.stepsFlow {
+  border-top: 2px solid var(--color-text);
+}
+.stepRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(8px, 2vw, 32px);
+  padding: clamp(22px, 3vw, 32px) 0;
+  border-bottom: 2px solid var(--color-text);
+  align-items: start;
+}
+.stepHead {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+.stepN {
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--color-accent);
+  line-height: 0.9;
+}
+.stepTitle {
+  margin: 0;
+  font-size: clamp(21px, 2.2vw, 28px);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.stepBody {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--color-neutral-800);
+  max-width: 52ch;
+}
+.stepTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-content: flex-start;
+}
+.stepTag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 6px 9px;
+  border: 1px solid color-mix(in srgb, var(--color-text) 35%, transparent);
+  color: var(--color-neutral-700);
+}
+
+/* — cases — */
+.casesList {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 24px);
+}
+.caseCard {
+  border: 2px solid var(--color-text);
+  background: var(--color-bg);
+}
+.caseHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  padding: clamp(16px, 2vw, 22px);
+  border-bottom: 2px solid var(--color-text);
+}
+.caseN {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+}
+.caseTitle {
+  margin: 0;
+  font-size: clamp(20px, 2.2vw, 27px);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.caseResult {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 9px;
+  background: var(--color-accent-200);
+  color: var(--color-accent-700);
+}
+.caseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.caseCol {
+  padding: clamp(18px, 2vw, 26px);
+  border-right: 2px solid var(--color-text);
+  border-bottom: 2px solid var(--color-text);
+}
+.caseColLast {
+  padding: clamp(18px, 2vw, 26px);
+  border-bottom: 2px solid var(--color-text);
+}
+.caseColMid {
+  background: var(--color-neutral-100);
+}
+.caseColLabel {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  margin-bottom: 14px;
+}
+.caseBefore {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.caseBefore li {
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--color-neutral-700);
+}
+.caseChange {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--color-neutral-800);
+}
+.caseAfter {
+  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.caseFeatures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.caseFeature {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 9px;
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+/* — demo teaser — */
+.teaserGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+.teaserPanel {
+  border: 2px solid var(--color-text);
+  background: var(--color-text);
+  padding: clamp(16px, 2vw, 24px);
+}
+.teaserPanelHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.teaserPanelDot {
+  width: 10px;
+  height: 10px;
+  background: var(--color-accent);
+  display: block;
+}
+.teaserPanelLabel {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--color-neutral-400);
+}
+.teaserStep {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-bg) 22%, transparent);
+}
+.teaserStepN {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: var(--color-neutral-600);
+  flex: 0 0 auto;
+}
+.teaserStepText {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-bg);
+}
+
+/* — pricing — */
+.pricingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2px;
+  background: var(--color-text);
+  border: 2px solid var(--color-text);
+}
+.pricingCell {
+  background: var(--color-bg);
+  padding: clamp(22px, 2.5vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.pricingStep {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--color-neutral-500);
+}
+.pricingTitle {
+  margin: 0;
+  font-size: clamp(22px, 2.2vw, 29px);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.pricingBody {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-neutral-800);
+  flex: 1 1 auto;
+}
+.pricingNote {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-accent-700);
+  border-top: 1px solid color-mix(in srgb, var(--color-text) 25%, transparent);
+  padding-top: 14px;
+}
+
+/* — faq layout — */
+.faqGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+}
+.faqIntro {
+  margin: 20px 0 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--color-neutral-800);
+  max-width: 40ch;
+}
+
+/* — cta banner — */
+.ctaBanner {
+  background: var(--color-accent);
+  border-top: 2px solid var(--color-text);
+}
+.ctaBannerInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(52px, 8vw, 110px) clamp(16px, 3vw, 32px);
+}
+.ctaBannerTitle {
+  margin: 0;
+  font-weight: 900;
+  font-size: clamp(34px, 6.4vw, 76px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--color-bg);
+  max-width: 20ch;
+}
+.ctaBannerSub {
+  margin: clamp(20px, 3vw, 28px) 0 clamp(28px, 4vw, 40px);
+  font-size: clamp(17px, 1.7vw, 21px);
+  line-height: 1.5;
+  color: var(--color-accent-100);
+  max-width: 52ch;
+}
+.ctaBannerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.ctaBannerPrimary {
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-weight: 700;
+  font-size: 16px;
+  padding: 18px 26px;
+  display: block;
+}
+.ctaBannerPrimary:hover {
+  background: var(--color-neutral-900);
+  color: var(--color-bg);
+}
+.ctaBannerGhost {
+  background: transparent;
+  border: 2px solid var(--color-bg);
+  color: var(--color-bg);
+  font-weight: 700;
+  font-size: 16px;
+  padding: 16px 24px;
+  display: block;
+}
+.ctaBannerGhost:hover {
+  background: var(--color-accent-600);
+}
+
+/* — footer — */
+.footer {
+  background: var(--color-text);
+  color: var(--color-neutral-400);
+}
+.footerInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(36px, 5vw, 64px) clamp(16px, 3vw, 32px);
+}
+.footerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: clamp(24px, 3vw, 40px);
+}
+.footerBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.footerBrandMark {
+  width: 20px;
+  height: 20px;
+  background: var(--color-accent);
+  display: block;
+}
+.footerBrandText {
+  font-weight: 900;
+  font-size: 18px;
+  color: var(--color-bg);
+  letter-spacing: -0.02em;
+}
+.footerLede {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  max-width: 34ch;
+}
+.footerColTitle {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--color-neutral-600);
+  margin-bottom: 16px;
+}
+.footerColLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footerLink {
+  font-size: 14px;
+  color: var(--color-neutral-400);
+}
+.footerLink:hover {
+  color: var(--color-accent);
+}
+.footerBottom {
+  margin-top: clamp(28px, 4vw, 48px);
+  padding-top: 20px;
+  border-top: 1px solid color-mix(in srgb, var(--color-bg) 20%, transparent);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+.footerCopy {
+  font-size: 12.5px;
+  color: var(--color-neutral-600);
+}
+.footerLegal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.footerLegalLink {
+  font-size: 12.5px;
+  color: var(--color-neutral-600);
+}
+.footerLegalLink:hover {
+  color: var(--color-accent);
+}

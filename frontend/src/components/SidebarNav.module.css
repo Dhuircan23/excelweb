@@ -1,0 +1,92 @@
+.nav {
+  flex: 1 1 210px;
+  max-width: 100%;
+  background: var(--color-text);
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-bg) 20%, transparent);
+}
+
+.brandDot {
+  width: 16px;
+  height: 16px;
+  background: var(--color-accent);
+  display: block;
+  flex: 0 0 auto;
+}
+
+.brandLabel {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-bg);
+}
+
+.item {
+  border: 0;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-bg) 12%, transparent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: transparent;
+  color: var(--color-neutral-400);
+  font-weight: 500;
+}
+.item:hover {
+  background: var(--color-neutral-800);
+  color: var(--color-bg);
+}
+.itemActive {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-weight: 700;
+}
+.itemActive:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  background: var(--color-neutral-600);
+  display: block;
+  flex: 0 0 auto;
+}
+.itemActive .dot {
+  background: var(--color-bg);
+}
+
+.name {
+  flex: 1 1 auto;
+}
+
+.count {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  padding: 3px 6px;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  flex: 0 0 auto;
+}
+
+.footer {
+  margin-top: auto;
+  padding: 16px;
+  border-top: 1px solid color-mix(in srgb, var(--color-bg) 20%, transparent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

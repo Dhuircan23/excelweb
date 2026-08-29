@@ -1,0 +1,42 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-neutral-800);
+}
+
+.control {
+  border: 2px solid var(--border-color, color-mix(in srgb, var(--color-text) 35%, transparent));
+  background: var(--color-bg);
+  padding: 14px;
+  font-size: 15px;
+  color: var(--color-text);
+  width: 100%;
+  font-family: inherit;
+}
+.control:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 0;
+}
+
+textarea.control {
+  resize: vertical;
+}
+
+.error {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-accent-700);
+}
+
+.help {
+  font-size: 12.5px;
+  color: var(--color-neutral-600);
+}

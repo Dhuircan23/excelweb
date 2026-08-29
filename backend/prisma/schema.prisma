@@ -1,0 +1,79 @@
+// Prisma schema for the ExcelWeb commercial MVP.
+// Dev default is SQLite (zero setup). For production, switch the
+// datasource provider to "postgresql" and point DATABASE_URL at a
+// managed Postgres instance — see ARCHITECTURE.md.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  ARCHIVED
+}
+
+// A commercial diagnostic request submitted from /diagnostico.
+model Lead {
+  id        String   @id @default(cuid())
+  status    LeadStatus @default(NEW)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Step 1 — contact info
+  name     String
+  company  String
+  email    String
+  whatsapp String?
+  industry String?
+
+  // Step 2 — current process
+  currentProcess String // "¿Qué haces actualmente con Excel?"
+  fileCount      String? // segmented option label, e.g. "2–5"
+  peopleCount    String? // segmented option label, e.g. "6–20"
+  manualParts    String?
+  problems       String?
+  automationGoal String?
+
+  // Step 3 — goal
+  improvementCategories String // JSON-encoded string[] (SQLite has no native array type)
+
+  files LeadFile[]
+
+  @@index([createdAt])
+  @@index([email])
+}
+
+// A file attached to a diagnostic request (Excel export, PDF, screenshot...).
+model LeadFile {
+  id           String   @id @default(cuid())
+  leadId       String
+  lead         Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  originalName String
+  storedName   String
+  mimeType     String
+  size         Int
+  createdAt    DateTime @default(now())
+
+  @@index([leadId])
+}
+
+// Lightweight product-analytics events (CTA clicks, demo funnel, form funnel).
+// Intentionally minimal: no PII, no session replay — just named events with
+// a small JSON payload, enough to see where the funnel leaks.
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  name      String
+  payload   String? // JSON-encoded, optional
+  path      String?
+  createdAt DateTime @default(now())
+
+  @@index([name])
+  @@index([createdAt])
+}
