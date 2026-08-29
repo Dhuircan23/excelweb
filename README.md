@@ -138,34 +138,51 @@ en la raíz y falla.
 5. Configurar `SMTP_*` y `LEADS_NOTIFICATION_EMAIL` si se quiere que el
    equipo comercial reciba un correo por cada solicitud.
 
-### Desplegar en Railway paso a paso
+### Desplegar en Render + Vercel (recomendado — $0/mes)
 
-1. **Servicio del backend**: en el servicio creado desde este repo, ve a
-   *Settings → Source* y fija **Root Directory** en `backend`. Railway
-   detecta entonces el `package.json` de ahí y corre `npm install` (que ya
-   incluye `prisma generate` vía `postinstall`) y luego `npm start`
-   (que aplica las migraciones y arranca el servidor).
-2. **Base de datos**: agrega el plugin de **Postgres** al proyecto (como ya
-   tienes). En el servicio del backend, ve a *Variables* y agrega
-   `DATABASE_URL` como **referencia** a la variable que expone el plugin de
-   Postgres (Railway te la sugiere al escribir `${{`), no como texto plano.
-3. Agrega el resto de variables de `backend/.env.example` en *Variables*:
-   `NODE_ENV=production`, `CORS_ORIGIN=<url pública del frontend>`,
-   `UPLOADS_DIR=/tmp/uploads` (el filesystem de Railway no es persistente
-   entre despliegues — para adjuntos que deban sobrevivir, migrar a
-   almacenamiento externo tipo S3 más adelante), `MAX_FILE_SIZE_MB=25`,
-   `MAX_FILES_PER_LEAD=5`, y los `SMTP_*`/`LEADS_NOTIFICATION_EMAIL` si
-   quieres notificación por correo.
-4. **Servicio del frontend**: crea un segundo servicio en el mismo proyecto
-   desde el mismo repo, con **Root Directory** en `frontend`. Como es un
-   sitio estático, suele ser más simple desplegarlo en Vercel o Netlify en
-   vez de Railway — pero si prefieres mantenerlo todo en Railway, configura
-   el *Build Command* en `npm run build` y el *Start Command* en
-   `npx vite preview --host 0.0.0.0 --port $PORT`, y agrega la variable
-   `VITE_API_URL` con la URL pública del servicio del backend.
-5. Redeploy. El build log ya no debería mostrar el error de Railpack "could
-   not determine how to build the app" — ese error salía precisamente por
-   no tener el Root Directory configurado.
+Backend + base de datos en **Render** (tier free), frontend en **Vercel**
+(tier free, sin cold start). Ambos tienen plan gratuito real, a diferencia
+de Railway.
+
+**Backend + Postgres (Render, con un solo clic vía Blueprint)**
+
+1. En Render: *New → Blueprint* → conecta este repositorio. Render lee
+   [`render.yaml`](./render.yaml) automáticamente y propone crear el
+   servicio web (`excelweb-backend`, root directory `backend`, build/start
+   commands, health check en `/api/health`) y la base de datos
+   (`excelweb-db`) juntos, con `DATABASE_URL` ya enlazada entre ambos.
+2. Render te va a pedir los valores de las variables marcadas como
+   secretas en el blueprint (`CORS_ORIGIN`, `SMTP_*`, `LEADS_NOTIFICATION_EMAIL`).
+   Puedes dejar `CORS_ORIGIN=http://localhost:5173` por ahora y actualizarla
+   cuando tengas la URL del frontend; las de `SMTP_*` puedes dejarlas vacías
+   si no quieres notificación por correo todavía.
+3. Aplica el blueprint. Render instala, corre `prisma generate`
+   (vía `postinstall`), compila, aplica migraciones (`prisma migrate deploy`,
+   parte de `npm start`) y arranca — sin tocar ninguna configuración a mano.
+4. Nota: el filesystem del plan free no es persistente entre despliegues —
+   los adjuntos de los leads no sobreviven un redeploy. No es un problema
+   para el MVP; ver `ROADMAP.md` para cuándo pasar a almacenamiento externo.
+
+**Frontend (Vercel)**
+
+1. En Vercel: *Add New → Project* → importa este repositorio.
+2. En *Root Directory* selecciona `frontend` (Vercel detecta Vite
+   automáticamente: build command `npm run build`, output `dist`).
+3. Agrega la variable de entorno `VITE_API_URL` con la URL pública del
+   backend de Render (ej. `https://excelweb-backend.onrender.com`).
+4. Deploy. [`frontend/vercel.json`](./frontend/vercel.json) ya incluye la
+   reescritura necesaria para que las rutas de React Router (`/demo`,
+   `/diagnostico`, etc.) funcionen al refrescar o entrar por link directo,
+   en vez de dar 404.
+5. Vuelve al servicio del backend en Render y actualiza `CORS_ORIGIN` con
+   la URL real que te dio Vercel.
+
+### Alternativa: Railway
+
+También funciona en Railway con el mismo `backend/` y `frontend/` como
+servicios separados (fija *Root Directory* en cada uno), pero su plan
+gratuito es limitado — normalmente requiere el plan Hobby de pago para uso
+sostenido, por eso no es la opción por defecto aquí.
 
 ## Estado del proyecto
 
