@@ -1,9 +1,12 @@
+-- CreateEnum
+CREATE TYPE "LeadStatus" AS ENUM ('NEW', 'CONTACTED', 'QUALIFIED', 'ARCHIVED');
+
 -- CreateTable
 CREATE TABLE "Lead" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "status" TEXT NOT NULL DEFAULT 'NEW',
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "id" TEXT NOT NULL,
+    "status" "LeadStatus" NOT NULL DEFAULT 'NEW',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
     "company" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -15,28 +18,33 @@ CREATE TABLE "Lead" (
     "manualParts" TEXT,
     "problems" TEXT,
     "automationGoal" TEXT,
-    "improvementCategories" TEXT NOT NULL
+    "improvementCategories" TEXT NOT NULL,
+
+    CONSTRAINT "Lead_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "LeadFile" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "leadId" TEXT NOT NULL,
     "originalName" TEXT NOT NULL,
     "storedName" TEXT NOT NULL,
     "mimeType" TEXT NOT NULL,
     "size" INTEGER NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "LeadFile_leadId_fkey" FOREIGN KEY ("leadId") REFERENCES "Lead" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "LeadFile_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "AnalyticsEvent" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "payload" TEXT,
     "path" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "AnalyticsEvent_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -53,3 +61,6 @@ CREATE INDEX "AnalyticsEvent_name_idx" ON "AnalyticsEvent"("name");
 
 -- CreateIndex
 CREATE INDEX "AnalyticsEvent_createdAt_idx" ON "AnalyticsEvent"("createdAt");
+
+-- AddForeignKey
+ALTER TABLE "LeadFile" ADD CONSTRAINT "LeadFile_leadId_fkey" FOREIGN KEY ("leadId") REFERENCES "Lead"("id") ON DELETE CASCADE ON UPDATE CASCADE;

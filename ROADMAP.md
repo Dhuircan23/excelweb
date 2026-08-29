@@ -18,7 +18,7 @@ que el MVP no bloquea, pero tampoco intenta anticipar.
       idle/submitting/success/error, página de confirmación con su propia
       ruta (`/diagnostico/gracias`).
 - [x] Persistencia real: `POST /api/leads` guarda cada solicitud y sus
-      archivos en base de datos (Prisma + SQLite en dev / Postgres en prod).
+      archivos en base de datos (Prisma + Postgres, mismo motor en dev y prod).
 - [x] Notificación por correo al equipo comercial (opcional vía SMTP,
       nunca bloquea el guardado del lead).
 - [x] Dashboard conceptual con datos ficticios: 6 secciones, métricas,

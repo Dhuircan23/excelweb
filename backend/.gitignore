@@ -3,9 +3,5 @@ dist
 .env
 uploads/*
 !uploads/.gitkeep
-prisma/dev.db
-prisma/dev.db-journal
-prisma/test.db
-prisma/test.db-journal
 uploads-test/
 *.log
