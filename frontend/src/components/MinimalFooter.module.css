@@ -1,0 +1,36 @@
+.footer {
+  border-top: 2px solid var(--color-text);
+  background: var(--color-bg);
+  margin-top: auto;
+}
+
+.bar {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 22px clamp(16px, 3vw, 32px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.note {
+  font-size: 12.5px;
+  color: var(--color-neutral-600);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.link:hover {
+  color: var(--color-accent);
+}

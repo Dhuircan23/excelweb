@@ -1,0 +1,119 @@
+.dropzone {
+  border: 2px dashed var(--color-divider);
+  background: var(--color-bg);
+  padding: clamp(20px, 3vw, 32px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  cursor: pointer;
+}
+.dropzone:hover,
+.dropzoneActive {
+  border-color: var(--color-accent);
+  background: var(--color-accent-100);
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+  background: var(--color-accent);
+  display: block;
+  flex: 0 0 auto;
+}
+
+.copy {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.copyTitle {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.copyBody {
+  display: block;
+  font-size: 13px;
+  color: var(--color-neutral-700);
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.chooseBtn {
+  font-size: 13px;
+  font-weight: 700;
+  border: 2px solid var(--color-text);
+  padding: 11px 15px;
+  flex: 0 0 auto;
+  background: transparent;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: color-mix(in srgb, var(--color-text) 20%, transparent);
+  margin-top: 12px;
+}
+.item {
+  background: var(--color-bg);
+  padding: 12px 14px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.itemDot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent);
+  display: block;
+  flex: 0 0 auto;
+}
+.itemName {
+  flex: 1 1 auto;
+  font-size: 13.5px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.itemSize {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11.5px;
+  color: var(--color-neutral-600);
+  flex: 0 0 auto;
+}
+.itemRemove {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 0;
+  color: var(--color-accent-700);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+.itemRemove:hover {
+  color: var(--color-accent);
+}
+
+.errors {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.errors li {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-accent-700);
+}

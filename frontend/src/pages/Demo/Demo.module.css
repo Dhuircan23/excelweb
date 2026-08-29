@@ -1,0 +1,400 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.progressBar {
+  border-bottom: 2px solid var(--color-text);
+  background: var(--color-surface);
+}
+.progressInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px clamp(16px, 3vw, 32px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.progressStep {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+}
+.progressN {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+.progressLabel {
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.main {
+  flex: 1 1 auto;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 32px);
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: clamp(26px, 3.6vw, 42px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  max-width: 24ch;
+}
+.subtitle {
+  margin: 0 0 clamp(24px, 3vw, 36px);
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--color-neutral-800);
+  max-width: 56ch;
+}
+
+/* — excel view — */
+.excelPanel {
+  border: 2px solid var(--color-text);
+  background: var(--color-surface);
+}
+.excelHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--color-text);
+}
+.excelFilename {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.excelReadonly {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  background: var(--color-neutral-300);
+  color: var(--color-neutral-800);
+}
+.excelEdited {
+  margin-left: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: var(--color-neutral-600);
+}
+
+.excelTabs {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 2px solid var(--color-text);
+  background: var(--color-bg);
+}
+.excelTab {
+  flex: 0 0 auto;
+  padding: 12px 18px;
+  border: 0;
+  border-right: 1px solid color-mix(in srgb, var(--color-text) 25%, transparent);
+  background: transparent;
+  color: var(--color-neutral-700);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.excelTab:hover {
+  background: var(--color-surface);
+}
+.excelTabActive {
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.excelFormula {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11.5px;
+  background: var(--color-neutral-100);
+  padding: 10px 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 25%, transparent);
+  color: var(--color-neutral-700);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.excelTableWrap {
+  overflow-x: auto;
+}
+.excelTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+.excelTable th {
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--color-bg);
+  border-bottom: 2px solid var(--color-text);
+  border-right: 1px solid color-mix(in srgb, var(--color-text) 18%, transparent);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--color-neutral-700);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.excelTable td {
+  padding: 10px 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent);
+  border-right: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent);
+  white-space: nowrap;
+}
+
+.excelFooter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 16px;
+  border-top: 2px solid var(--color-text);
+  background: var(--color-bg);
+}
+.excelFooterNote {
+  font-size: 13.5px;
+  color: var(--color-neutral-700);
+  max-width: 38ch;
+}
+
+/* — converting view — */
+.convertingPanel {
+  border: 2px solid var(--color-text);
+  background: var(--color-text);
+  padding: clamp(24px, 4vw, 56px);
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.convertingEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.convertingDot {
+  width: 10px;
+  height: 10px;
+  background: var(--color-accent);
+  display: block;
+  animation: ew-pulse 1s ease-in-out infinite;
+}
+.convertingLabel {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-neutral-400);
+}
+.convertingTitle {
+  margin: 0 0 32px;
+  font-size: clamp(26px, 3.6vw, 44px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--color-bg);
+  max-width: 22ch;
+}
+.logLines {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+}
+.logLine {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-bg) 20%, transparent);
+  animation: ew-slide 0.35s ease-out both;
+}
+.logMark {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  color: var(--color-accent);
+  flex: 0 0 auto;
+}
+.logText {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-bg);
+}
+.progressTrack {
+  margin-top: 32px;
+  height: 6px;
+  background: color-mix(in srgb, var(--color-bg) 20%, transparent);
+  max-width: 640px;
+}
+.progressFill {
+  height: 6px;
+  background: var(--color-accent);
+  transition: width 0.4s ease-out;
+}
+
+/* — app view — */
+.appHead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: clamp(20px, 3vw, 32px);
+}
+.appHeadResult {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  margin-bottom: 10px;
+}
+.resetBtn {
+  margin-left: auto;
+  background: transparent;
+  border: 2px solid var(--color-text);
+  color: var(--color-text);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 13px 18px;
+  cursor: pointer;
+}
+.resetBtn:hover {
+  background: var(--color-surface);
+}
+
+.appShell {
+  border: 2px solid var(--color-text);
+  background: var(--color-neutral-100);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  box-shadow: var(--shadow-lg);
+}
+
+.appContent {
+  flex: 999 1 420px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.appContentHead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 2px solid var(--color-text);
+}
+.appContentTitle {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.chartBlock {
+  padding: 18px 16px;
+  border-bottom: 2px solid var(--color-text);
+}
+.chartLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-neutral-700);
+  margin-bottom: 14px;
+}
+
+.listItem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 15%, transparent);
+}
+.listDot {
+  width: 8px;
+  height: 8px;
+  display: block;
+  flex: 0 0 auto;
+}
+.listBody {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.listTitle {
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.listMeta {
+  font-size: 13px;
+  color: var(--color-neutral-700);
+  margin-top: 4px;
+}
+
+.appFooter {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 16px;
+  border-top: 2px solid var(--color-text);
+  background: var(--color-accent-100);
+}
+.appFooterDot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent);
+  display: block;
+  animation: ew-pulse 1.8s ease-in-out infinite;
+  flex: 0 0 auto;
+}
+.appFooterNote {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-accent-700);
+  flex: 1 1 200px;
+}
+
+.followUp {
+  margin-top: clamp(28px, 4vw, 48px);
+  border: 2px solid var(--color-text);
+  background: var(--color-surface);
+  padding: clamp(22px, 3vw, 36px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+}
+.followUpTitle {
+  margin: 0 0 10px;
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  max-width: 26ch;
+}
+.followUpBody {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--color-neutral-800);
+  max-width: 52ch;
+}

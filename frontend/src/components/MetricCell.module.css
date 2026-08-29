@@ -1,0 +1,32 @@
+.cell {
+  padding: 16px;
+  border-right: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);
+}
+
+.label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-neutral-700);
+  margin-bottom: 8px;
+}
+
+.value {
+  font-size: clamp(21px, 2.4vw, 28px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.sub {
+  font-size: 12px;
+  color: var(--color-neutral-600);
+  margin-top: 6px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  border-bottom: 2px solid var(--color-text);
+}
