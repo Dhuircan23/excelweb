@@ -18,7 +18,10 @@ services:
     env: node
     plan: free
     rootDir: backend
-    buildCommand: npm install && npm run build
+    # --include=dev is required: NODE_ENV=production (set below) makes a
+    # plain `npm install` skip devDependencies, which breaks the build —
+    # tsc and the @types/* packages it needs are all devDependencies.
+    buildCommand: npm install --include=dev && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
