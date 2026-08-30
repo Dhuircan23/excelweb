@@ -6,10 +6,11 @@ import { leadsRouter } from "./routes/leads.js";
 import { eventsRouter } from "./routes/events.js";
 
 export function createApp() {
-  const app = express();
+    const app = express();
+    app.set('trust proxy', 1); // <-- Añádelo aquí
 
-  app.use(helmet());
-  app.use(
+    app.use(helmet());
+    app.use(
     cors({
       origin: env.corsOrigin.split(",").map((o) => o.trim()),
     }),
