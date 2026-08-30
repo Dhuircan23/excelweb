@@ -44,6 +44,14 @@ producto con login.
   (espejo cliente de las reglas de archivo del backend, solo para UX — el
   servidor es quien realmente valida), `useDocumentMeta.ts` (SEO por ruta,
   sin `react-helmet`).
+- **`pages/Demo/xlsxParser.ts`**: opción de subir un `.xlsx`/`.xls`/`.csv`
+  real en `/demo`. Se parsea con `xlsx` (SheetJS) enteramente en el
+  navegador, vía `import()` dinámico para no cargar esa librería en el
+  resto del sitio — el archivo nunca se envía al backend. `xlsx@0.18.5`
+  tiene dos advisories sin parche disponible en npm; se acepta el riesgo
+  porque el parseo es client-side, sobre un archivo que el propio visitante
+  elige, sin ruta hacia el servidor ni hacia otras sesiones (detalle en el
+  comentario del archivo).
 
 ## Backend (`backend/`)
 

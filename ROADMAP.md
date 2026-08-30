@@ -13,6 +13,10 @@ que el MVP no bloquea, pero tampoco intenta anticipar.
 - [x] Demo interactiva 100% client-side: Excel ficticio con 5 pestañas →
       animación de conversión → aplicación resultante navegable, con
       exportación de UI (sin backend, sin datos reales).
+- [x] Opción de subir un `.xlsx`/`.xls`/`.csv` real en la demo: se parsea
+      entero en el navegador (nunca se sube a un servidor) y reemplaza los
+      datos ficticios por las hojas, tablas y un gráfico genérico del
+      archivo real del visitante.
 - [x] Formulario de diagnóstico de 3 pasos con validación real (cliente +
       servidor), adjuntos con lista blanca de tipo/tamaño, estados
       idle/submitting/success/error, página de confirmación con su propia
