@@ -1,0 +1,59 @@
+# Render Blueprint — deploys the ExcelWeb backend + its Postgres database
+# in one shot. In Render: New → Blueprint → select this repo → it reads
+# this file automatically. Only the frontend (Vercel) is separate — see
+# frontend/vercel.json and README.md "Deployment".
+#
+# Fields marked `sync: false` are secrets/environment-specific values Render
+# will prompt you for once, in the dashboard, instead of storing them here.
+
+databases:
+  - name: excelweb-db
+    plan: free
+    databaseName: excelweb
+    user: excelweb
+
+services:
+  - type: web
+    name: excelweb-backend
+    env: node
+    plan: free
+    rootDir: backend
+    # --include=dev is required: NODE_ENV=production (set below) makes a
+    # plain `npm install` skip devDependencies, which breaks the build —
+    # tsc and the @types/* packages it needs are all devDependencies.
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: excelweb-db
+          property: connectionString
+      # The deployed frontend URL (Vercel). Set once the frontend is live —
+      # until then this can stay as http://localhost:5173.
+      - key: CORS_ORIGIN
+        sync: false
+      # Render's free filesystem is not persistent across deploys/restarts.
+      # Fine for the MVP; move to S3-compatible storage before this matters.
+      - key: UPLOADS_DIR
+        value: /tmp/uploads
+      - key: MAX_FILE_SIZE_MB
+        value: "25"
+      - key: MAX_FILES_PER_LEAD
+        value: "5"
+      # Optional — leave unset (via the Render dashboard) to skip lead
+      # notification emails entirely; leads are saved either way.
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_FROM
+        value: "ExcelWeb <hola@excelweb.app>"
+      - key: LEADS_NOTIFICATION_EMAIL
+        sync: false

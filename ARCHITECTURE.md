@@ -9,8 +9,8 @@ Dos aplicaciones independientes que se comunican por HTTP:
 │  frontend/           │  ───────────────────────▶  │  backend/             │
 │  React 19 + TS       │   POST /api/leads (multi-  │  Express + TS          │
 │  Vite (SPA, CSR)      │   part con adjuntos)        │  Prisma ORM            │
-│  react-router-dom     │   POST /api/events (json)   │  SQLite (dev) /        │
-│                       │  ◀───────────────────────  │  Postgres (prod)       │
+│  react-router-dom     │   POST /api/events (json)   │  Postgres              │
+│                       │  ◀───────────────────────  │                        │
 └─────────────────────┘        201 / 4xx JSON        └──────────────────────┘
 ```
 
@@ -50,8 +50,10 @@ producto con login.
 - **Express + TypeScript**, un único proceso HTTP. `src/app.ts` construye la
   app (testeable con Supertest sin levantar un puerto real); `src/index.ts`
   la sirve.
-- **Prisma ORM** sobre **SQLite** en desarrollo (`prisma/schema.prisma`,
-  cero configuración) — ver más abajo cómo pasar a Postgres en producción.
+- **Prisma ORM** sobre **Postgres**, tanto en desarrollo como en producción
+  (`prisma/schema.prisma`) — mismo motor en ambos lados para no tener
+  sorpresas de compatibilidad al desplegar. Ver README.md para levantar un
+  Postgres local.
 - **Rutas**:
   - `POST /api/leads` — recibe el formulario de diagnóstico (`multipart/form-data`
     vía Multer), valida con Zod (`src/lib/validation.ts`), persiste el `Lead`
@@ -82,15 +84,13 @@ No hay tabla `projects` todavía: la especificación original la marca como
 "si es necesario", y en el MVP no lo es — se agrega cuando exista un caso de
 uso real (por ejemplo, al pasar del diagnóstico a un proyecto activo).
 
-### SQLite → Postgres en producción
+### Migraciones
 
-El esquema usa únicamente tipos compatibles con ambos motores. Para producción:
-
-1. En `backend/prisma/schema.prisma`, cambiar `provider = "sqlite"` a
-   `provider = "postgresql"` en el bloque `datasource`.
-2. Apuntar `DATABASE_URL` a una instancia Postgres gestionada (Supabase,
-   Railway, Render, RDS...).
-3. `npx prisma migrate deploy` en el pipeline de despliegue.
+`backend/prisma/migrations/` guarda el historial de migraciones versionado.
+En local, `npm run prisma:migrate` (alias de `prisma migrate dev`) crea una
+nueva migración cuando cambia el esquema. En producción, `npm start` corre
+`prisma migrate deploy` antes de arrancar el servidor — aplica cualquier
+migración pendiente automáticamente en cada despliegue, sin paso manual.
 
 ## Flujo de datos: envío del diagnóstico
 
@@ -117,9 +117,12 @@ El esquema usa únicamente tipos compatibles con ambos motores. Para producción
   usuario ni de datos personalizados en el primer render, un SPA es más
   simple de operar (un solo build estático) sin perder nada relevante. El
   SEO estático (title, meta, OG) se resuelve por ruta con un hook liviano.
-- **SQLite por defecto**: prioriza que cualquiera pueda levantar el proyecto
-  sin instalar ni configurar un motor de base de datos aparte. Postgres es
-  la recomendación explícita para producción (ver arriba).
+- **Postgres en dev y prod, no SQLite**: al principio el MVP usaba SQLite en
+  desarrollo por cero configuración, pero eso hace que el primer despliegue
+  real sea la primera vez que el esquema corre contra Postgres — justo el
+  peor momento para descubrir una diferencia de tipos o de migraciones. Un
+  solo motor en todos lados evita esa sorpresa a cambio de necesitar
+  Postgres instalado localmente (ver README.md).
 - **Sin autenticación ni multiempresa en el MVP**: el dashboard es una
   página pública de ejemplo, no un producto. Ver `ROADMAP.md` para cómo la
   forma de los datos ya está preparada para no bloquear esa evolución.

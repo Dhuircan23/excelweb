@@ -11,10 +11,14 @@ function requiredInProd(name: string, fallback: string): string {
   return process.env[name] ?? fallback;
 }
 
+// DATABASE_URL itself isn't read here — Prisma reads it directly via
+// env("DATABASE_URL") in schema.prisma — but this still enforces it's set
+// before the server starts in production, rather than failing on first query.
+requiredInProd("DATABASE_URL", "");
+
 export const env = {
   nodeEnv: optional("NODE_ENV", "development"),
   port: Number(optional("PORT", "4000")),
-  databaseUrl: requiredInProd("DATABASE_URL", "file:./dev.db"),
   corsOrigin: optional("CORS_ORIGIN", "http://localhost:5173"),
   uploadsDir: optional("UPLOADS_DIR", "./uploads"),
   maxFileSizeMb: Number(optional("MAX_FILE_SIZE_MB", "25")),

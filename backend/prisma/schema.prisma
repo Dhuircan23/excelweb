@@ -1,14 +1,13 @@
 // Prisma schema for the ExcelWeb commercial MVP.
-// Dev default is SQLite (zero setup). For production, switch the
-// datasource provider to "postgresql" and point DATABASE_URL at a
-// managed Postgres instance — see ARCHITECTURE.md.
+// Postgres everywhere — dev and prod — to avoid drift between the two.
+// See README.md for how to get a local Postgres running.
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -42,7 +41,7 @@ model Lead {
   automationGoal String?
 
   // Step 3 — goal
-  improvementCategories String // JSON-encoded string[] (SQLite has no native array type)
+  improvementCategories String // JSON-encoded string[] — a fixed short enum, not worth a join table
 
   files LeadFile[]
 
