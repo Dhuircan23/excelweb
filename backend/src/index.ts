@@ -3,6 +3,8 @@ import { env } from "./lib/env.js";
 
 const app = createApp();
 
-app.listen(env.port, () => {
-  console.log(`ExcelWeb API listening on http://localhost:${env.port} (${env.nodeEnv})`);
+const PORT = Number(process.env.PORT) || env.port || 3000;
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`ExcelWeb API listening on port ${PORT} (${env.nodeEnv})`);
 });
