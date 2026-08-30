@@ -16,6 +16,9 @@ export function createApp() {
   );
   app.use(express.json({ limit: "1mb" }));
   app.use(express.urlencoded({ extended: true, limit: "1mb" }));
+  app.get("/", (_req, res) => {
+  res.json({ message: "ExcelWeb Backend API en línea 🚀" });
+});
 
   app.get("/api/health", (_req, res) => {
     res.json({ status: "ok" });
